@@ -7,20 +7,20 @@ interface HeaderProps {
 
 export default function Header({ mode, onModeChange }: HeaderProps) {
   return (
-    <header className="pt-10 pb-8 px-6 mb-2">
+    <header className="pt-4 pb-2 px-6">
       <div className="max-w-5xl mx-auto">
-        {/* Title */}
-        <div className="flex items-end gap-4 mb-8">
-          <h1 className="text-3xl font-light tracking-tight leading-none">
-            Tokyo <span className="font-medium">Quizz</span>
-          </h1>
-          <span className="font-jp text-lg text-sumi pb-0.5">
-            東京二十三区
-          </span>
-        </div>
+        {/* Title + Nav inline */}
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-baseline gap-3">
+            <h1 className="text-xl font-light tracking-tight leading-none">
+              Tokyo <span className="font-medium">Quizz</span>
+            </h1>
+            <span className="font-jp text-sm text-sumi">
+              東京二十三区
+            </span>
+          </div>
 
-        {/* Nav */}
-        <nav className="flex gap-0 border-b border-washi-darker">
+          <nav className="flex gap-0">
           <NavTab
             active={mode === 'explore'}
             onClick={() => onModeChange('explore')}
@@ -33,7 +33,9 @@ export default function Header({ mode, onModeChange }: HeaderProps) {
           >
             Quiz
           </NavTab>
-        </nav>
+          </nav>
+        </div>
+        <div className="rule-thin" />
       </div>
     </header>
   )

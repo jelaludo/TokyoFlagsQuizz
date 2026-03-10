@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="min-h-screen bg-washi">
       <Header mode={mode} onModeChange={setMode} />
-      <main className="max-w-5xl mx-auto px-6 pb-16">
+      <main className="max-w-5xl mx-auto px-4 pb-12 pt-2">
         {mode === 'explore' ? <ExploreMode /> : <QuizMode />}
       </main>
     </div>

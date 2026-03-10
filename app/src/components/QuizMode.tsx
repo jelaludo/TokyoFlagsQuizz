@@ -138,9 +138,9 @@ export default function QuizMode() {
   // Quiz selector
   if (!quizFilter || !question) {
     return (
-      <div className="max-w-lg mx-auto pt-8">
+      <div className="max-w-lg mx-auto pt-4">
         <h2 className="text-lg font-medium mb-1">Choose a quiz</h2>
-        <p className="text-sm text-sumi-light/40 mb-8">Test your knowledge of Tokyo's 23 wards</p>
+        <p className="text-sm text-sumi-light/40 mb-6">Test your knowledge of Tokyo's 23 wards</p>
 
         <div className="space-y-px bg-washi-darker/40">
           {quizOptions.map(opt => (
@@ -164,7 +164,7 @@ export default function QuizMode() {
   return (
     <div className="max-w-xl mx-auto">
       {/* Score bar */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center justify-between mb-4">
         <button
           onClick={() => { setQuizFilter(null); setQuestion(null) }}
           className="text-xs text-sumi-light/40 hover:text-sumi transition-colors"
@@ -182,36 +182,32 @@ export default function QuizMode() {
         </div>
       </div>
 
-      {/* Question */}
-      <div className="bg-white border border-washi-darker/60 animate-in" key={question.ward.id + question.category}>
-        {/* Category label */}
-        <div className="px-6 pt-5 pb-0">
+      {/* Question card with overlay result */}
+      <div className="relative bg-white border border-washi-darker/60 animate-in" key={question.ward.id + question.category}>
+        {/* Category + question */}
+        <div className="px-5 pt-4 pb-3">
           <span className="text-[10px] uppercase tracking-widest text-sumi-light/30">
             {getCategoryLabel(question.category)}
           </span>
-        </div>
-
-        {/* Question text */}
-        <div className="px-6 pt-2 pb-4">
-          <h2 className="text-base font-medium leading-relaxed">
+          <h2 className="text-sm font-medium leading-relaxed mt-1">
             {getQuestionText(question)}
           </h2>
         </div>
 
         {/* Image */}
         {question.isImageQuestion && (
-          <div className="mx-6 mb-5 bg-washi border border-washi-dark/50 flex justify-center py-6">
+          <div className="mx-5 mb-4 bg-washi border border-washi-dark/50 flex justify-center py-5">
             <img
               src={question.category === 'flag' ? question.ward.flag_url : question.ward.seal_url}
               alt="Identify this symbol"
-              className="max-h-36 object-contain"
+              className="max-h-28 object-contain"
             />
           </div>
         )}
 
         {/* Options */}
-        <div className="px-6 pb-6">
-          <div className="space-y-2">
+        <div className="px-5 pb-5">
+          <div className="space-y-1.5">
             {question.options.map((opt, i) => {
               let style = 'border-washi-darker/60 hover:border-sumi/20 hover:bg-washi/50'
 
@@ -230,7 +226,7 @@ export default function QuizMode() {
                   key={opt.id}
                   onClick={() => handleSelect(opt.id)}
                   disabled={showResult}
-                  className={`w-full flex items-center gap-3 px-4 py-3 border text-left transition-all ${style}`}
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 border text-left transition-all ${style}`}
                 >
                   <span className="text-[11px] text-sumi-light/25 font-mono w-3 shrink-0">{i + 1}</span>
                   <span className="font-medium text-sm">{opt.name_en}</span>
@@ -241,16 +237,16 @@ export default function QuizMode() {
           </div>
         </div>
 
-        {/* Result */}
+        {/* Result overlay — covers the options area */}
         {showResult && (
-          <div className="border-t border-washi-darker/60 px-6 py-5 animate-in">
+          <div className="absolute inset-x-0 bottom-0 bg-white/95 backdrop-blur-sm border-t border-washi-darker/60 px-5 py-5 animate-in">
             {isCorrect ? (
-              <p className="text-sm text-matsu font-medium">
+              <p className="text-sm text-matsu font-medium text-center">
                 Correct — {question.ward.name_en}
                 <span className="font-jp ml-2 font-normal">{question.ward.name_ja}</span>
               </p>
             ) : (
-              <p className="text-sm">
+              <p className="text-sm text-center">
                 <span className="text-ake">Incorrect</span>
                 <span className="text-sumi-light/50"> — the answer was </span>
                 <span className="font-medium">{question.ward.name_en}</span>
@@ -260,12 +256,12 @@ export default function QuizMode() {
 
             <button
               onClick={nextQuestion}
-              className="w-full mt-4 bg-sumi text-washi py-2.5 text-sm font-medium hover:bg-sumi-light transition-colors"
+              className="w-full mt-3 bg-sumi text-washi py-2.5 text-sm font-medium hover:bg-sumi-light transition-colors"
             >
               Next
             </button>
-            <p className="text-center text-[11px] text-sumi-light/25 mt-2">
-              Enter to continue
+            <p className="text-center text-[11px] text-sumi-light/25 mt-1.5">
+              Enter
             </p>
           </div>
         )}
