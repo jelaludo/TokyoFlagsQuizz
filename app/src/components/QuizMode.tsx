@@ -234,7 +234,7 @@ export default function QuizMode() {
                 >
                   <span className="text-[11px] text-sumi-light/25 font-mono w-3 shrink-0">{i + 1}</span>
                   <span className="font-medium text-sm">{opt.name_en}</span>
-                  <span className="font-jp text-xs text-current opacity-40 ml-auto">{opt.name_ja}</span>
+                  <span className="font-jp text-sm text-current ml-auto">{opt.name_ja}</span>
                 </button>
               )
             })}
@@ -247,14 +247,14 @@ export default function QuizMode() {
             {isCorrect ? (
               <p className="text-sm text-matsu font-medium">
                 Correct — {question.ward.name_en}
-                <span className="font-jp ml-2 font-normal opacity-60">{question.ward.name_ja}</span>
+                <span className="font-jp ml-2 font-normal">{question.ward.name_ja}</span>
               </p>
             ) : (
               <p className="text-sm">
                 <span className="text-ake">Incorrect</span>
                 <span className="text-sumi-light/50"> — the answer was </span>
                 <span className="font-medium">{question.ward.name_en}</span>
-                <span className="font-jp ml-1 text-sumi-light/40 text-xs">{question.ward.name_ja}</span>
+                <span className="font-jp ml-1 text-sm">{question.ward.name_ja}</span>
               </p>
             )}
 

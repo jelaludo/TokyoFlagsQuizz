@@ -14,7 +14,7 @@ export default function Header({ mode, onModeChange }: HeaderProps) {
           <h1 className="text-3xl font-light tracking-tight leading-none">
             Tokyo <span className="font-medium">Quizz</span>
           </h1>
-          <span className="font-jp text-sm text-sumi-light/50 pb-0.5">
+          <span className="font-jp text-lg text-sumi pb-0.5">
             東京二十三区
           </span>
         </div>

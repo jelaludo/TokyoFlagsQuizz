@@ -27,7 +27,7 @@ export default function WardCard({ ward, index }: WardCardProps) {
           </div>
           <div className="flex items-baseline justify-between gap-2">
             <h3 className="font-medium text-base">{ward.name_en}</h3>
-            <span className="font-jp text-xs text-sumi-light/40 shrink-0">{ward.name_ja}</span>
+            <span className="font-jp text-sm text-sumi shrink-0">{ward.name_ja}</span>
           </div>
         </div>
       ) : (
@@ -42,7 +42,7 @@ export default function WardCard({ ward, index }: WardCardProps) {
             />
             <div>
               <h3 className="font-medium text-base leading-tight">{ward.name_en}</h3>
-              <span className="font-jp text-xs text-sumi-light/40">{ward.name_ja}</span>
+              <span className="font-jp text-sm text-sumi">{ward.name_ja}</span>
             </div>
           </div>
 
