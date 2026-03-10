@@ -1,0 +1,577 @@
+[
+  {
+    "id": "chiyoda",
+    "name_en": "Chiyoda",
+    "name_ja": "千代田区",
+    "number": 1,
+    "tree": {
+      "name_en": "Pine",
+      "species": "Pinus"
+    },
+    "flower": {
+      "name_en": "Sakura",
+      "species": "Prunus serrulata"
+    },
+    "bird": {
+      "name_en": "Swan",
+      "species": "Cygnus"
+    },
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Flag_of_Chiyoda%2C_Tokyo.svg/200px-Flag_of_Chiyoda%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Emblem_of_Chiyoda%2C_Tokyo.svg/120px-Emblem_of_Chiyoda%2C_Tokyo.svg.png",
+    "population": 66680,
+    "area_km2": 11.66,
+    "notable_districts": [
+      "Nagatachō",
+      "Kasumigaseki",
+      "Ōtemachi",
+      "Marunouchi",
+      "Akihabara"
+    ]
+  },
+  {
+    "id": "chuo",
+    "name_en": "Chūō",
+    "name_ja": "中央区",
+    "number": 2,
+    "tree": {
+      "name_en": "Willow",
+      "species": "Salix"
+    },
+    "flower": {
+      "name_en": "Azalea",
+      "species": "Rhododendron"
+    },
+    "bird": null,
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Flag_of_Chuo%2C_Tokyo.svg/200px-Flag_of_Chuo%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Emblem_of_Chuo%2C_Tokyo.svg/120px-Emblem_of_Chuo%2C_Tokyo.svg.png",
+    "population": 169179,
+    "area_km2": 10.21,
+    "notable_districts": [
+      "Nihonbashi",
+      "Ginza",
+      "Tsukiji",
+      "Tsukishima"
+    ]
+  },
+  {
+    "id": "minato",
+    "name_en": "Minato",
+    "name_ja": "港区",
+    "number": 3,
+    "tree": {
+      "name_en": "Flowering Dogwood",
+      "species": "Cornus florida"
+    },
+    "flower": {
+      "name_en": "Hydrangea & Rose",
+      "species": "Hydrangea macrophylla / Rosa"
+    },
+    "bird": null,
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_Minato%2C_Tokyo.svg/200px-Flag_of_Minato%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Emblem_of_Minato%2C_Tokyo.svg/120px-Emblem_of_Minato%2C_Tokyo.svg.png",
+    "population": 260486,
+    "area_km2": 20.37,
+    "notable_districts": [
+      "Odaiba",
+      "Roppongi",
+      "Azabu",
+      "Akasaka",
+      "Aoyama"
+    ]
+  },
+  {
+    "id": "shinjuku",
+    "name_en": "Shinjuku",
+    "name_ja": "新宿区",
+    "number": 4,
+    "tree": {
+      "name_en": "Zelkova",
+      "species": "Zelkova serrata"
+    },
+    "flower": {
+      "name_en": "Azalea",
+      "species": "Rhododendron"
+    },
+    "bird": null,
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Flag_of_Shinjuku%2C_Tokyo.svg/200px-Flag_of_Shinjuku%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Emblem_of_Shinjuku%2C_Tokyo.svg/120px-Emblem_of_Shinjuku%2C_Tokyo.svg.png",
+    "population": 349385,
+    "area_km2": 18.22,
+    "notable_districts": [
+      "Shinjuku",
+      "Takadanobaba",
+      "Kagurazaka",
+      "Yotsuya"
+    ]
+  },
+  {
+    "id": "bunkyo",
+    "name_en": "Bunkyō",
+    "name_ja": "文京区",
+    "number": 5,
+    "tree": {
+      "name_en": "Ginkgo",
+      "species": "Ginkgo biloba"
+    },
+    "flower": {
+      "name_en": "Azalea",
+      "species": "Rhododendron"
+    },
+    "bird": null,
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_Bunkyo%2C_Tokyo.svg/200px-Flag_of_Bunkyo%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Emblem_of_Bunkyo%2C_Tokyo.svg/120px-Emblem_of_Bunkyo%2C_Tokyo.svg.png",
+    "population": 240069,
+    "area_km2": 11.29,
+    "notable_districts": [
+      "Hongō",
+      "Yayoi",
+      "Hakusan"
+    ]
+  },
+  {
+    "id": "taito",
+    "name_en": "Taitō",
+    "name_ja": "台東区",
+    "number": 6,
+    "tree": {
+      "name_en": "Cherry Blossom",
+      "species": "Prunus serrulata"
+    },
+    "flower": {
+      "name_en": "Morning Glory",
+      "species": "Ipomoea nil"
+    },
+    "bird": null,
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Flag_of_Taito%2C_Tokyo.svg/200px-Flag_of_Taito%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Emblem_of_Taito%2C_Tokyo.svg/120px-Emblem_of_Taito%2C_Tokyo.svg.png",
+    "population": 211444,
+    "area_km2": 10.11,
+    "notable_districts": [
+      "Ueno",
+      "Asakusa"
+    ]
+  },
+  {
+    "id": "sumida",
+    "name_en": "Sumida",
+    "name_ja": "墨田区",
+    "number": 7,
+    "tree": {
+      "name_en": "Cherry Blossom",
+      "species": "Prunus serrulata"
+    },
+    "flower": {
+      "name_en": "Azalea",
+      "species": "Rhododendron"
+    },
+    "bird": null,
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Flag_of_Sumida%2C_Tokyo.svg/200px-Flag_of_Sumida%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Emblem_of_Sumida%2C_Tokyo.svg/120px-Emblem_of_Sumida%2C_Tokyo.svg.png",
+    "population": 272085,
+    "area_km2": 13.77,
+    "notable_districts": [
+      "Kinshichō",
+      "Ryōgoku",
+      "Oshiage"
+    ]
+  },
+  {
+    "id": "koto",
+    "name_en": "Kōtō",
+    "name_ja": "江東区",
+    "number": 8,
+    "tree": {
+      "name_en": "Black Pine",
+      "species": "Pinus thunbergii"
+    },
+    "flower": {
+      "name_en": "Sasanqua",
+      "species": "Camellia sasanqua"
+    },
+    "bird": null,
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Flag_of_Koto%2C_Tokyo.svg/200px-Flag_of_Koto%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Emblem_of_Koto%2C_Tokyo.svg/120px-Emblem_of_Koto%2C_Tokyo.svg.png",
+    "population": 524310,
+    "area_km2": 40.16,
+    "notable_districts": [
+      "Kameido",
+      "Toyosu",
+      "Ariake",
+      "Fukagawa"
+    ]
+  },
+  {
+    "id": "shinagawa",
+    "name_en": "Shinagawa",
+    "name_ja": "品川区",
+    "number": 9,
+    "tree": {
+      "name_en": "Castanopsis & Maple",
+      "species": "Castanopsis / Acer"
+    },
+    "flower": {
+      "name_en": "Satsuki Azalea",
+      "species": "Rhododendron indicum"
+    },
+    "bird": {
+      "name_en": "Black-headed Gull",
+      "species": "Chroicocephalus ridibundus"
+    },
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Flag_of_Shinagawa%2C_Tokyo.svg/200px-Flag_of_Shinagawa%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Emblem_of_Shinagawa%2C_Tokyo.svg/120px-Emblem_of_Shinagawa%2C_Tokyo.svg.png",
+    "population": 422488,
+    "area_km2": 22.84,
+    "notable_districts": [
+      "Shinagawa",
+      "Gotanda",
+      "Ōsaki",
+      "Tennōzu"
+    ]
+  },
+  {
+    "id": "meguro",
+    "name_en": "Meguro",
+    "name_ja": "目黒区",
+    "number": 10,
+    "tree": {
+      "name_en": "Castanopsis",
+      "species": "Castanopsis"
+    },
+    "flower": {
+      "name_en": "Bush Clover",
+      "species": "Lespedeza"
+    },
+    "bird": {
+      "name_en": "Great Tit",
+      "species": "Parus major"
+    },
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Flag_of_Meguro%2C_Tokyo.svg/200px-Flag_of_Meguro%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Emblem_of_Meguro%2C_Tokyo.svg/120px-Emblem_of_Meguro%2C_Tokyo.svg.png",
+    "population": 288088,
+    "area_km2": 14.67,
+    "notable_districts": [
+      "Meguro",
+      "Nakameguro",
+      "Jiyugaoka",
+      "Komaba"
+    ]
+  },
+  {
+    "id": "ota",
+    "name_en": "Ōta",
+    "name_ja": "大田区",
+    "number": 11,
+    "tree": {
+      "name_en": "Camphor Tree",
+      "species": "Cinnamomum camphora"
+    },
+    "flower": {
+      "name_en": "Japanese Apricot",
+      "species": "Prunus mume"
+    },
+    "bird": {
+      "name_en": "Japanese Bush Warbler",
+      "species": "Horornis diphone"
+    },
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Flag_of_Ota%2C_Tokyo.svg/200px-Flag_of_Ota%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Emblem_of_%C5%8Cta%2C_Tokyo.svg/120px-Emblem_of_%C5%8Cta%2C_Tokyo.svg.png",
+    "population": 748081,
+    "area_km2": 60.66,
+    "notable_districts": [
+      "Ōmori",
+      "Kamata",
+      "Haneda",
+      "Den-en-chōfu"
+    ]
+  },
+  {
+    "id": "setagaya",
+    "name_en": "Setagaya",
+    "name_ja": "世田谷区",
+    "number": 12,
+    "tree": {
+      "name_en": "Zelkova",
+      "species": "Zelkova serrata"
+    },
+    "flower": {
+      "name_en": "Fringed Orchid",
+      "species": "Habenaria radiata"
+    },
+    "bird": {
+      "name_en": "Azure-winged Magpie",
+      "species": "Cyanopica cyanus"
+    },
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Flag_of_Setagaya%2C_Tokyo.svg/200px-Flag_of_Setagaya%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Emblem_of_Setagaya%2C_Tokyo.svg/120px-Emblem_of_Setagaya%2C_Tokyo.svg.png",
+    "population": 943664,
+    "area_km2": 58.05,
+    "notable_districts": [
+      "Shimokitazawa",
+      "Kinuta",
+      "Karasuyama"
+    ]
+  },
+  {
+    "id": "shibuya",
+    "name_en": "Shibuya",
+    "name_ja": "渋谷区",
+    "number": 13,
+    "tree": {
+      "name_en": "Zelkova",
+      "species": "Zelkova serrata"
+    },
+    "flower": {
+      "name_en": "Japanese Iris",
+      "species": "Iris ensata"
+    },
+    "bird": null,
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Flag_of_Shibuya%2C_Tokyo.svg/200px-Flag_of_Shibuya%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Emblem_of_Shibuya%2C_Tokyo.svg/120px-Emblem_of_Shibuya%2C_Tokyo.svg.png",
+    "population": 243883,
+    "area_km2": 15.11,
+    "notable_districts": [
+      "Shibuya",
+      "Harajuku",
+      "Ebisu",
+      "Daikanyama"
+    ]
+  },
+  {
+    "id": "nakano",
+    "name_en": "Nakano",
+    "name_ja": "中野区",
+    "number": 14,
+    "tree": {
+      "name_en": "Castanopsis",
+      "species": "Castanopsis"
+    },
+    "flower": {
+      "name_en": "Azalea",
+      "species": "Rhododendron"
+    },
+    "bird": null,
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Flag_of_Nakano%2C_Tokyo.svg/200px-Flag_of_Nakano%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Emblem_of_Nakano%2C_Tokyo.svg/120px-Emblem_of_Nakano%2C_Tokyo.svg.png",
+    "population": 344880,
+    "area_km2": 15.59,
+    "notable_districts": [
+      "Nakano"
+    ]
+  },
+  {
+    "id": "suginami",
+    "name_en": "Suginami",
+    "name_ja": "杉並区",
+    "number": 15,
+    "tree": {
+      "name_en": "Pine, Dawn Redwood & Sasanqua",
+      "species": "Pinus / Metasequoia glyptostroboides / Camellia sasanqua"
+    },
+    "flower": {
+      "name_en": "Sasanqua",
+      "species": "Camellia sasanqua"
+    },
+    "bird": null,
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Flag_of_Suginami%2C_Tokyo.svg/200px-Flag_of_Suginami%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Emblem_of_Suginami%2C_Tokyo.svg/120px-Emblem_of_Suginami%2C_Tokyo.svg.png",
+    "population": 591108,
+    "area_km2": 34.06,
+    "notable_districts": [
+      "Kōenji",
+      "Asagaya",
+      "Ogikubo"
+    ]
+  },
+  {
+    "id": "toshima",
+    "name_en": "Toshima",
+    "name_ja": "豊島区",
+    "number": 16,
+    "tree": {
+      "name_en": "Yoshino Cherry",
+      "species": "Prunus x yedoensis"
+    },
+    "flower": {
+      "name_en": "Azalea",
+      "species": "Rhododendron"
+    },
+    "bird": null,
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Flag_of_Toshima%2C_Tokyo.svg/200px-Flag_of_Toshima%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Emblem_of_Toshima%2C_Tokyo.svg/120px-Emblem_of_Toshima%2C_Tokyo.svg.png",
+    "population": 301599,
+    "area_km2": 13.01,
+    "notable_districts": [
+      "Ikebukuro",
+      "Sugamo"
+    ]
+  },
+  {
+    "id": "kita",
+    "name_en": "Kita",
+    "name_ja": "北区",
+    "number": 17,
+    "tree": {
+      "name_en": "Cherry Blossom",
+      "species": "Prunus serrulata"
+    },
+    "flower": {
+      "name_en": "Rhododendron",
+      "species": "Rhododendron"
+    },
+    "bird": null,
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_Kita%2C_Tokyo.svg/200px-Flag_of_Kita%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Emblem_of_Kita%2C_Tokyo.svg/120px-Emblem_of_Kita%2C_Tokyo.svg.png",
+    "population": 355213,
+    "area_km2": 20.61,
+    "notable_districts": [
+      "Akabane",
+      "Ōji",
+      "Tabata"
+    ]
+  },
+  {
+    "id": "arakawa",
+    "name_en": "Arakawa",
+    "name_ja": "荒川区",
+    "number": 18,
+    "tree": {
+      "name_en": "Cherry Blossom",
+      "species": "Prunus serrulata"
+    },
+    "flower": {
+      "name_en": "Azalea",
+      "species": "Rhododendron"
+    },
+    "bird": null,
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Flag_of_Arakawa%2C_Tokyo.svg/200px-Flag_of_Arakawa%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Emblem_of_Arakawa%2C_Tokyo.svg/120px-Emblem_of_Arakawa%2C_Tokyo.svg.png",
+    "population": 217475,
+    "area_km2": 10.16,
+    "notable_districts": [
+      "Arakawa",
+      "Machiya",
+      "Nippori"
+    ]
+  },
+  {
+    "id": "itabashi",
+    "name_en": "Itabashi",
+    "name_ja": "板橋区",
+    "number": 19,
+    "tree": {
+      "name_en": "Zelkova",
+      "species": "Zelkova serrata"
+    },
+    "flower": {
+      "name_en": "Windflower",
+      "species": "Anemone flaccida"
+    },
+    "bird": {
+      "name_en": "White Wagtail",
+      "species": "Motacilla alba"
+    },
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Flag_of_Itabashi%2C_Tokyo.svg/200px-Flag_of_Itabashi%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Emblem_of_Itabashi%2C_Tokyo.svg/120px-Emblem_of_Itabashi%2C_Tokyo.svg.png",
+    "population": 584483,
+    "area_km2": 32.22,
+    "notable_districts": [
+      "Itabashi",
+      "Takashimadaira"
+    ]
+  },
+  {
+    "id": "nerima",
+    "name_en": "Nerima",
+    "name_ja": "練馬区",
+    "number": 20,
+    "tree": {
+      "name_en": "Kobushi Magnolia",
+      "species": "Magnolia kobus"
+    },
+    "flower": {
+      "name_en": "Azalea",
+      "species": "Rhododendron"
+    },
+    "bird": null,
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Flag_of_Nerima%2C_Tokyo.svg/200px-Flag_of_Nerima%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Emblem_of_Nerima%2C_Tokyo.svg/120px-Emblem_of_Nerima%2C_Tokyo.svg.png",
+    "population": 752608,
+    "area_km2": 48.08,
+    "notable_districts": [
+      "Nerima",
+      "Ōizumi",
+      "Hikarigaoka"
+    ]
+  },
+  {
+    "id": "adachi",
+    "name_en": "Adachi",
+    "name_ja": "足立区",
+    "number": 21,
+    "tree": {
+      "name_en": "Cherry Blossom",
+      "species": "Prunus serrulata"
+    },
+    "flower": {
+      "name_en": "Tulip",
+      "species": "Tulipa"
+    },
+    "bird": null,
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Flag_of_Adachi%2C_Tokyo.svg/200px-Flag_of_Adachi%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Emblem_of_Adachi%2C_Tokyo.svg/120px-Emblem_of_Adachi%2C_Tokyo.svg.png",
+    "population": 695043,
+    "area_km2": 53.25,
+    "notable_districts": [
+      "Kitasenju",
+      "Takenotsuka"
+    ]
+  },
+  {
+    "id": "katsushika",
+    "name_en": "Katsushika",
+    "name_ja": "葛飾区",
+    "number": 22,
+    "tree": {
+      "name_en": "Willow",
+      "species": "Salix"
+    },
+    "flower": {
+      "name_en": "Iris",
+      "species": "Iris"
+    },
+    "bird": null,
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Flag_of_Katsushika%2C_Tokyo.svg/200px-Flag_of_Katsushika%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Emblem_of_Katsushika%2C_Tokyo.svg/120px-Emblem_of_Katsushika%2C_Tokyo.svg.png",
+    "population": 453093,
+    "area_km2": 34.8,
+    "notable_districts": [
+      "Tateishi",
+      "Aoto",
+      "Kameari",
+      "Shibamata"
+    ]
+  },
+  {
+    "id": "edogawa",
+    "name_en": "Edogawa",
+    "name_ja": "江戸川区",
+    "number": 23,
+    "tree": {
+      "name_en": "Camphor Tree",
+      "species": "Cinnamomum camphora"
+    },
+    "flower": {
+      "name_en": "Rhododendron",
+      "species": "Rhododendron"
+    },
+    "bird": null,
+    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Flag_of_Edogawa%2C_Tokyo.svg/200px-Flag_of_Edogawa%2C_Tokyo.svg.png",
+    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Emblem_of_Edogawa%2C_Tokyo.svg/120px-Emblem_of_Edogawa%2C_Tokyo.svg.png",
+    "population": 697932,
+    "area_km2": 49.9,
+    "notable_districts": [
+      "Kasai",
+      "Koiwa"
+    ]
+  }
+]
