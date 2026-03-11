@@ -295,11 +295,19 @@ export default function GuessMode({ practiceFlags, onClearPractice, onStartPract
   // Stats
   if (game.phase === 'stats') {
     const errorIds = new Set([...game.perFlagMistakes, ...game.revealedByMistakeIds])
+    // Flags matched when ≤3 choices remained — not a real test of knowledge
+    const eliminationIds = new Set(
+      game.timings
+        .map((t, i) => ({ id: t.flag.id, remaining: game.total - i }))
+        .filter(x => x.remaining <= 3)
+        .map(x => x.id)
+    )
+    const reviewIds = new Set([...errorIds, ...eliminationIds])
     const toReview = game.timings
-      .filter(t => errorIds.has(t.flag.id))
+      .filter(t => reviewIds.has(t.flag.id))
       .sort((a, b) => b.timeMs - a.timeMs)
     const known = game.timings
-      .filter(t => !errorIds.has(t.flag.id))
+      .filter(t => !reviewIds.has(t.flag.id))
       .sort((a, b) => a.timeMs - b.timeMs)
 
     return (
@@ -325,6 +333,9 @@ export default function GuessMode({ practiceFlags, onClearPractice, onStartPract
                       )}
                       {game.revealedByMistakeIds.has(t.flag.id) && !game.perFlagMistakes.has(t.flag.id) && (
                         <span className="text-[9px] text-sumi-light/40">revealed</span>
+                      )}
+                      {eliminationIds.has(t.flag.id) && !errorIds.has(t.flag.id) && (
+                        <span className="text-[9px] text-sumi-light/40">by elimination</span>
                       )}
                       <span className="text-xs font-mono text-ake">{formatMs(t.timeMs)}</span>
                     </div>
@@ -380,7 +391,14 @@ export default function GuessMode({ practiceFlags, onClearPractice, onStartPract
   // Review
   if (game.phase === 'review') {
     const errorIds = new Set([...game.perFlagMistakes, ...game.revealedByMistakeIds])
-    const toReview = game.timings.filter(t => errorIds.has(t.flag.id))
+    const eliminationIds = new Set(
+      game.timings
+        .map((t, i) => ({ id: t.flag.id, remaining: game.total - i }))
+        .filter(x => x.remaining <= 3)
+        .map(x => x.id)
+    )
+    const reviewIds = new Set([...errorIds, ...eliminationIds])
+    const toReview = game.timings.filter(t => reviewIds.has(t.flag.id))
 
     return (
       <div className="max-w-lg mx-auto pt-2 sm:pt-6 flex-1 min-h-0 overflow-y-auto animate-in">
