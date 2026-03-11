@@ -1,4 +1,4 @@
-export type AppMode = 'map' | 'flagmatch' | 'explore'
+export type AppMode = 'guess' | 'flagmatch' | 'explore'
 
 export interface FlagItem {
   id: string

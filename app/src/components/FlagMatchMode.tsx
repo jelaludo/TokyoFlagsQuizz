@@ -11,22 +11,29 @@ const allFlags: FlagItem[] = [
   ...wards.map(w => ({ id: w.id, name_en: w.name_en, name_ja: w.name_ja, flag_url: w.flag_url })),
   tokyoMetro,
 ]
-const TOTAL = allFlags.length // 24
 
-function buildGridFlags(): FlagItem[] {
-  return shuffle([...allFlags])
+function buildGridFlags(flags: FlagItem[]): FlagItem[] {
+  return shuffle([...flags])
 }
 
 interface FlagMatchProps {
   settings: Settings
+  practiceFlags: FlagItem[] | null
+  onClearPractice: () => void
+  onStartPractice: (flags: FlagItem[], targetMode: 'guess' | 'flagmatch') => void
 }
 
 type Difficulty = 'easy' | 'hard'
-type GamePhase = 'intro' | 'playing' | 'results'
+type GamePhase = 'intro' | 'playing' | 'results' | 'stats' | 'review'
 
 interface MistakeRecord {
   flag: FlagItem
   count: number
+}
+
+interface FlagTiming {
+  flag: FlagItem
+  timeMs: number
 }
 
 interface GameState {
@@ -41,8 +48,11 @@ interface GameState {
   revealedIds: Set<string>
   guessedIds: Set<string>
   mistakes: Map<string, MistakeRecord>
+  timings: FlagTiming[]
+  questionStartTime: number
   phase: GamePhase
   difficulty: Difficulty
+  total: number
 }
 
 function formatTime(seconds: number): string {
@@ -51,8 +61,15 @@ function formatTime(seconds: number): string {
   return `${m}:${s.toString().padStart(2, '0')}`
 }
 
-export default function FlagMatchMode({ settings }: FlagMatchProps) {
-  const [introGrid] = useState<FlagItem[]>(() => buildGridFlags())
+function formatMs(ms: number): string {
+  return (ms / 1000).toFixed(1) + 's'
+}
+
+export default function FlagMatchMode({ settings, practiceFlags, onClearPractice, onStartPractice }: FlagMatchProps) {
+  const flags = practiceFlags ?? allFlags
+  const total = flags.length
+
+  const [introGrid] = useState<FlagItem[]>(() => buildGridFlags(allFlags))
 
   const [game, setGame] = useState<GameState>({
     queue: [],
@@ -66,17 +83,21 @@ export default function FlagMatchMode({ settings }: FlagMatchProps) {
     revealedIds: new Set(),
     guessedIds: new Set(),
     mistakes: new Map(),
-    phase: 'intro',
+    timings: [],
+    questionStartTime: 0,
+    phase: practiceFlags ? 'playing' : 'intro',
     difficulty: 'easy',
+    total,
   })
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const startGame = useCallback((difficulty: Difficulty) => {
+    const f = practiceFlags ?? allFlags
     const now = Date.now()
     setGame({
-      queue: shuffle([...allFlags]),
-      gridFlags: buildGridFlags(),
+      queue: shuffle([...f]),
+      gridFlags: buildGridFlags(f),
       currentIndex: 0,
       correct: 0,
       incorrect: 0,
@@ -86,10 +107,20 @@ export default function FlagMatchMode({ settings }: FlagMatchProps) {
       revealedIds: new Set(),
       guessedIds: new Set(),
       mistakes: new Map(),
+      timings: [],
+      questionStartTime: now,
       phase: 'playing',
       difficulty,
+      total: f.length,
     })
-  }, [])
+  }, [practiceFlags])
+
+  // Auto-start practice mode
+  useEffect(() => {
+    if (practiceFlags && game.phase === 'intro') {
+      startGame('easy')
+    }
+  }, [practiceFlags, game.phase, startGame])
 
   // Timer
   useEffect(() => {
@@ -115,7 +146,9 @@ export default function FlagMatchMode({ settings }: FlagMatchProps) {
       if (!current) return g
 
       if (flagId === current.id) {
-        return { ...g, correct: g.correct + 1, feedback: { id: flagId, type: 'correct' as const } }
+        const timeMs = Date.now() - g.questionStartTime
+        const newTimings = [...g.timings, { flag: current, timeMs }]
+        return { ...g, correct: g.correct + 1, feedback: { id: flagId, type: 'correct' as const }, timings: newTimings }
       } else {
         const newMistakes = new Map(g.mistakes)
         const existing = newMistakes.get(current.id)
@@ -143,7 +176,7 @@ export default function FlagMatchMode({ settings }: FlagMatchProps) {
             if (timerRef.current) clearInterval(timerRef.current)
             return { ...g, feedback: null, guessedIds: newGuessed, phase: 'results' }
           }
-          return { ...g, currentIndex: nextIndex, feedback: null, guessedIds: newGuessed }
+          return { ...g, currentIndex: nextIndex, feedback: null, guessedIds: newGuessed, questionStartTime: Date.now() }
         })
       }, 500)
       return () => clearTimeout(timeout)
@@ -188,9 +221,9 @@ export default function FlagMatchMode({ settings }: FlagMatchProps) {
     return (
       <div className="max-w-2xl mx-auto flex-1 min-h-0 flex flex-col">
         <div className="relative flex-1 min-h-0 flex flex-col">
-          <div className="flex-1 min-h-0 grid grid-cols-4 sm:grid-cols-6 gap-1.5 sm:gap-2 py-2 opacity-20 blur-[1px]">
+          <div className="flex-1 min-h-0 grid grid-cols-4 sm:grid-cols-6 gap-0.5 sm:gap-1.5 py-2 opacity-20 blur-[1px]">
             {introGrid.map(flag => (
-              <div key={flag.id} className="bg-white border border-washi-darker/60 flex items-center justify-center p-1">
+              <div key={flag.id} className="aspect-[4/3] bg-white border border-washi-darker/60 flex items-center justify-center px-1.5 py-0.5">
                 <img src={flag.flag_url} alt="" className="w-full h-full object-contain" draggable={false} />
               </div>
             ))}
@@ -237,7 +270,7 @@ export default function FlagMatchMode({ settings }: FlagMatchProps) {
 
           {mistakesList.length > 0 && (
             <div className="mb-6 text-left">
-              <h3 className="text-xs uppercase tracking-widest text-sumi-light/30 mb-2 text-center">Review</h3>
+              <h3 className="text-xs uppercase tracking-widest text-sumi-light/30 mb-2 text-center">Mistakes</h3>
               <div className="border border-washi-darker/60">
                 {mistakesList.map((m, i) => (
                   <div key={m.flag.id} className={`flex items-center gap-3 px-3 py-2.5 ${i > 0 ? 'border-t border-washi-darker/40' : ''}`}>
@@ -253,10 +286,141 @@ export default function FlagMatchMode({ settings }: FlagMatchProps) {
             </div>
           )}
 
-          <div className="flex gap-3 justify-center">
+          <div className="flex gap-3 justify-center mb-3">
             <button onClick={() => startGame('easy')} className="bg-matsu text-white px-6 py-2.5 text-sm font-medium hover:bg-matsu-light transition-colors">Easy</button>
             <button onClick={() => startGame('hard')} className="bg-sumi text-washi px-6 py-2.5 text-sm font-medium hover:bg-sumi-light transition-colors">Hard</button>
           </div>
+
+          {!practiceFlags && game.timings.length > 0 && (
+            <button
+              onClick={() => setGame(g => ({ ...g, phase: 'stats' }))}
+              className="text-xs text-sumi-light/40 hover:text-sumi transition-colors underline underline-offset-2"
+            >
+              View timing stats →
+            </button>
+          )}
+
+          {practiceFlags && (
+            <button onClick={onClearPractice} className="mt-1 text-xs text-sumi-light/40 hover:text-sumi transition-colors">
+              ← Back to stats
+            </button>
+          )}
+        </div>
+      </div>
+    )
+  }
+
+  // Stats
+  if (game.phase === 'stats') {
+    const sorted = [...game.timings].sort((a, b) => a.timeMs - b.timeMs)
+    const fastest = sorted.slice(0, 5)
+    const slowest = sorted.slice(-10).reverse()
+
+    return (
+      <div className="max-w-md mx-auto pt-2 sm:pt-6 flex-1 min-h-0 overflow-y-auto animate-in">
+        <div className="bg-white border border-washi-darker/60 px-4 sm:px-6 py-5 sm:py-8">
+          <h2 className="text-lg font-medium mb-1 text-center">Timing Stats</h2>
+          <p className="text-xs text-sumi-light/30 mb-5 uppercase tracking-widest text-center">Response time per flag</p>
+
+          {/* Fastest */}
+          <h3 className="text-xs uppercase tracking-widest text-matsu/60 mb-2">Fastest</h3>
+          <div className="border border-washi-darker/60 mb-5">
+            {fastest.map((t, i) => (
+              <div key={t.flag.id} className={`flex items-center gap-3 px-3 py-2 ${i > 0 ? 'border-t border-washi-darker/40' : ''}`}>
+                <img src={t.flag.flag_url} alt="" className="w-8 h-5 object-contain shrink-0" />
+                <div className="flex items-baseline gap-2 min-w-0 flex-1">
+                  <span className="font-kanji text-sm leading-tight">{t.flag.name_ja}</span>
+                  <span className="text-xs text-sumi-light/40 truncate">{t.flag.name_en}</span>
+                </div>
+                <span className="text-xs font-mono text-matsu shrink-0">{formatMs(t.timeMs)}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Slowest */}
+          <h3 className="text-xs uppercase tracking-widest text-ake/60 mb-2">Slowest</h3>
+          <div className="border border-washi-darker/60 mb-6">
+            {slowest.map((t, i) => (
+              <div key={t.flag.id} className={`flex items-center gap-3 px-3 py-2 ${i > 0 ? 'border-t border-washi-darker/40' : ''}`}>
+                <img src={t.flag.flag_url} alt="" className="w-8 h-5 object-contain shrink-0" />
+                <div className="flex items-baseline gap-2 min-w-0 flex-1">
+                  <span className="font-kanji text-sm leading-tight">{t.flag.name_ja}</span>
+                  <span className="text-xs text-sumi-light/40 truncate">{t.flag.name_en}</span>
+                </div>
+                <span className="text-xs font-mono text-ake shrink-0">{formatMs(t.timeMs)}</span>
+              </div>
+            ))}
+          </div>
+
+          {slowest.length >= 3 && (
+            <button
+              onClick={() => setGame(g => ({ ...g, phase: 'review' }))}
+              className="w-full bg-washi border border-washi-darker/60 py-3 text-sm font-medium text-sumi hover:bg-washi-dark/50 transition-colors"
+            >
+              Learn the unfamiliar ones?
+            </button>
+          )}
+
+          <button
+            onClick={() => setGame(g => ({ ...g, phase: 'results' }))}
+            className="w-full mt-2 py-2 text-xs text-sumi-light/40 hover:text-sumi transition-colors"
+          >
+            ← Back to results
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  // Review
+  if (game.phase === 'review') {
+    const sorted = [...game.timings].sort((a, b) => a.timeMs - b.timeMs)
+    const slowest = sorted.slice(-10).reverse()
+
+    return (
+      <div className="max-w-lg mx-auto pt-2 sm:pt-6 flex-1 min-h-0 overflow-y-auto animate-in">
+        <div className="bg-white border border-washi-darker/60 px-4 sm:px-6 py-5 sm:py-8">
+          <h2 className="text-lg font-medium mb-1 text-center">Review</h2>
+          <p className="text-xs text-sumi-light/30 mb-5 text-center">Memorize these flags and their names</p>
+
+          {/* Two-row flag review grid */}
+          <div className="grid grid-cols-5 gap-2 sm:gap-3 mb-6">
+            {slowest.map(t => (
+              <div key={t.flag.id} className="text-center">
+                <div className="aspect-[4/3] bg-washi border border-washi-darker/60 flex items-center justify-center p-1 mb-1">
+                  <img src={t.flag.flag_url} alt="" className="w-full h-full object-contain" draggable={false} />
+                </div>
+                <span className="font-kanji text-xs sm:text-sm leading-tight block">{t.flag.name_ja}</span>
+                <span className="text-[8px] sm:text-[9px] text-sumi-light/40 leading-tight block">{t.flag.name_en}</span>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-xs text-sumi-light/40 text-center mb-5">
+            Ready? Start a quick quiz with only these {slowest.length} flags:
+          </p>
+
+          <div className="flex gap-3 justify-center">
+            <button
+              onClick={() => onStartPractice(slowest.map(t => t.flag), 'flagmatch')}
+              className="bg-matsu text-white px-5 py-2.5 text-sm font-medium hover:bg-matsu-light transition-colors"
+            >
+              Match
+            </button>
+            <button
+              onClick={() => onStartPractice(slowest.map(t => t.flag), 'guess')}
+              className="bg-sumi text-washi px-5 py-2.5 text-sm font-medium hover:bg-sumi-light transition-colors"
+            >
+              Guess
+            </button>
+          </div>
+
+          <button
+            onClick={() => setGame(g => ({ ...g, phase: 'stats' }))}
+            className="w-full mt-3 py-2 text-xs text-sumi-light/40 hover:text-sumi transition-colors"
+          >
+            ← Back to stats
+          </button>
         </div>
       </div>
     )
@@ -268,7 +432,12 @@ export default function FlagMatchMode({ settings }: FlagMatchProps) {
       {/* Score bar */}
       <div className="flex items-center justify-between mb-1 sm:mb-3 shrink-0">
         <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm">
-          <Stat label="Progress" value={`${game.currentIndex + 1}/${TOTAL}`} />
+          {practiceFlags && (
+            <button onClick={onClearPractice} className="text-[9px] sm:text-[10px] uppercase tracking-widest text-ake hover:text-ake/70 transition-colors">
+              ← Back
+            </button>
+          )}
+          <Stat label="Progress" value={`${game.currentIndex + 1}/${game.total}`} />
           <Stat label="Correct" value={String(game.correct)} />
           <Stat label="Mistakes" value={String(game.incorrect)} />
         </div>
@@ -289,15 +458,15 @@ export default function FlagMatchMode({ settings }: FlagMatchProps) {
       )}
 
       {/* Flag grid */}
-      <div className="flex-1 min-h-0 grid grid-cols-4 sm:grid-cols-6 gap-1 sm:gap-2 pb-2">
+      <div className="flex-1 min-h-0 grid grid-cols-4 sm:grid-cols-6 gap-0.5 sm:gap-1.5 pb-1 content-start">
         {game.gridFlags.map(flag => {
           const isGuessed = game.guessedIds.has(flag.id)
-          if (isGuessed) return <div key={flag.id} />
+          if (isGuessed) return <div key={flag.id} className="aspect-[4/3]" />
 
           const isRevealed = game.revealedIds.has(flag.id)
           if (isRevealed) {
             return (
-              <div key={flag.id} className="bg-washi border border-washi-darker/60 flex flex-col items-center justify-center p-0.5 animate-in">
+              <div key={flag.id} className="aspect-[4/3] bg-washi border border-washi-darker/60 flex flex-col items-center justify-center p-0.5 animate-in">
                 <span className="font-kanji text-sm sm:text-lg leading-tight text-sumi">{flag.name_ja}</span>
                 <span className="text-[8px] sm:text-[9px] text-sumi-light/40 leading-tight">{flag.name_en}</span>
               </div>
@@ -321,7 +490,7 @@ export default function FlagMatchMode({ settings }: FlagMatchProps) {
               key={flag.id}
               onClick={() => handleFlagClick(flag.id)}
               disabled={!!game.feedback}
-              className={`bg-white border ${borderStyle} ${extraClass} flex items-center justify-center p-1 sm:p-1.5 transition-colors cursor-pointer disabled:cursor-default`}
+              className={`aspect-[4/3] bg-white border ${borderStyle} ${extraClass} flex items-center justify-center p-1 sm:p-1.5 transition-colors cursor-pointer disabled:cursor-default`}
             >
               <img src={flag.flag_url} alt="" className="w-full h-full object-contain" draggable={false} />
             </button>

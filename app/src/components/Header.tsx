@@ -27,10 +27,10 @@ export default function Header({ mode, onModeChange, settings, onUpdateSettings 
           <div className="flex items-center gap-0">
             <nav className="flex gap-0">
               <NavTab
-                active={mode === 'map'}
-                onClick={() => onModeChange('map')}
+                active={mode === 'guess'}
+                onClick={() => onModeChange('guess')}
               >
-                Map
+                Guess
               </NavTab>
               <NavTab
                 active={mode === 'flagmatch'}
