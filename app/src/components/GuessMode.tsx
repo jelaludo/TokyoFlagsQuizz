@@ -18,10 +18,16 @@ function buildGridFlags(flags: FlagItem[]): FlagItem[] {
 interface GuessProps {
   practiceFlags: FlagItem[] | null
   onClearPractice: () => void
+  onStartPractice: (flags: FlagItem[], targetMode: 'guess' | 'flagmatch') => void
 }
 
 type Difficulty = 'easy' | 'hard'
-type Phase = 'intro' | 'playing' | 'complete'
+type Phase = 'intro' | 'playing' | 'results' | 'stats' | 'review'
+
+interface FlagTiming {
+  flag: FlagItem
+  timeMs: number
+}
 
 interface GuessState {
   gridFlags: FlagItem[]
@@ -36,6 +42,8 @@ interface GuessState {
   difficulty: Difficulty
   phase: Phase
   total: number
+  timings: FlagTiming[]
+  selectionTime: number // when the user selected the current name
 }
 
 function formatTime(seconds: number): string {
@@ -44,10 +52,11 @@ function formatTime(seconds: number): string {
   return `${m}:${s.toString().padStart(2, '0')}`
 }
 
-export default function GuessMode({ practiceFlags, onClearPractice }: GuessProps) {
-  const flags = practiceFlags ?? allFlags
-  const total = flags.length
+function formatMs(ms: number): string {
+  return (ms / 1000).toFixed(1) + 's'
+}
 
+export default function GuessMode({ practiceFlags, onClearPractice, onStartPractice }: GuessProps) {
   const [introGrid] = useState<FlagItem[]>(() => buildGridFlags(allFlags))
   const [game, setGame] = useState<GuessState>({
     gridFlags: [],
@@ -61,7 +70,9 @@ export default function GuessMode({ practiceFlags, onClearPractice }: GuessProps
     elapsedSeconds: 0,
     difficulty: 'easy',
     phase: 'intro',
-    total,
+    total: allFlags.length,
+    timings: [],
+    selectionTime: 0,
   })
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const practiceStarted = useRef(false)
@@ -81,6 +92,8 @@ export default function GuessMode({ practiceFlags, onClearPractice }: GuessProps
       difficulty,
       phase: 'playing',
       total: f.length,
+      timings: [],
+      selectionTime: 0,
     })
   }, [practiceFlags])
 
@@ -105,7 +118,8 @@ export default function GuessMode({ practiceFlags, onClearPractice }: GuessProps
   const selectName = useCallback((id: string) => {
     setGame(g => {
       if (g.phase !== 'playing' || g.revealedIds.has(id)) return g
-      return { ...g, selectedId: g.selectedId === id ? null : id }
+      if (g.selectedId === id) return { ...g, selectedId: null, selectionTime: 0 }
+      return { ...g, selectedId: id, selectionTime: Date.now() }
     })
   }, [])
 
@@ -119,11 +133,21 @@ export default function GuessMode({ practiceFlags, onClearPractice }: GuessProps
         newRevealed.add(flagId)
         const allDone = newRevealed.size === g.total
         if (allDone && timerRef.current) clearInterval(timerRef.current)
+
+        // Record timing: time from selection to correct match
+        const matchedFlag = g.names.find(f => f.id === flagId)
+        const timeMs = g.selectionTime > 0 ? Date.now() - g.selectionTime : 0
+        const newTimings = matchedFlag && timeMs > 0
+          ? [...g.timings, { flag: matchedFlag, timeMs }]
+          : g.timings
+
         return {
           ...g,
           revealedIds: newRevealed,
           selectedId: null,
-          phase: allDone ? 'complete' : 'playing',
+          selectionTime: 0,
+          phase: allDone ? 'results' : 'playing',
+          timings: newTimings,
         }
       } else {
         return { ...g, wrongId: flagId, mistakes: g.mistakes + 1 }
@@ -212,6 +236,162 @@ export default function GuessMode({ practiceFlags, onClearPractice }: GuessProps
     )
   }
 
+  // Results
+  if (game.phase === 'results') {
+    const accuracy = game.total + game.mistakes > 0
+      ? Math.round((game.total / (game.total + game.mistakes)) * 100) : 0
+
+    return (
+      <div className="max-w-md mx-auto pt-2 sm:pt-6 flex-1 min-h-0 overflow-y-auto animate-in">
+        <div className="bg-white border border-washi-darker/60 px-4 sm:px-6 py-5 sm:py-8 text-center">
+          <h2 className="text-lg font-medium mb-1">All Matched!</h2>
+          <p className="text-xs text-sumi-light/30 mb-5 uppercase tracking-widest">{game.difficulty} mode</p>
+
+          <div className="flex justify-center gap-8 mb-6">
+            <ResultStat label="Matched" value={String(game.total)} color="text-matsu" />
+            <ResultStat label="Mistakes" value={String(game.mistakes)} color="text-ake" />
+            <ResultStat label="Time" value={formatTime(game.elapsedSeconds)} />
+            <ResultStat label="Accuracy" value={`${accuracy}%`} />
+          </div>
+
+          <div className="flex gap-3 justify-center mb-3">
+            <button onClick={() => startGame('easy')} className="bg-matsu text-white px-6 py-2.5 text-sm font-medium hover:bg-matsu-light transition-colors">Easy</button>
+            <button onClick={() => startGame('hard')} className="bg-sumi text-washi px-6 py-2.5 text-sm font-medium hover:bg-sumi-light transition-colors">Hard</button>
+          </div>
+
+          {!practiceFlags && game.timings.length > 0 && (
+            <button
+              onClick={() => setGame(g => ({ ...g, phase: 'stats' }))}
+              className="text-xs text-sumi-light/40 hover:text-sumi transition-colors underline underline-offset-2"
+            >
+              View timing stats →
+            </button>
+          )}
+
+          {practiceFlags && (
+            <button onClick={onClearPractice} className="mt-1 text-xs text-sumi-light/40 hover:text-sumi transition-colors">
+              ← Back to stats
+            </button>
+          )}
+        </div>
+      </div>
+    )
+  }
+
+  // Stats
+  if (game.phase === 'stats') {
+    const sorted = [...game.timings].sort((a, b) => a.timeMs - b.timeMs)
+    const fastest = sorted.slice(0, 5)
+    const slowest = sorted.slice(-10).reverse()
+
+    return (
+      <div className="max-w-md mx-auto pt-2 sm:pt-6 flex-1 min-h-0 overflow-y-auto animate-in">
+        <div className="bg-white border border-washi-darker/60 px-4 sm:px-6 py-5 sm:py-8">
+          <h2 className="text-lg font-medium mb-1 text-center">Timing Stats</h2>
+          <p className="text-xs text-sumi-light/30 mb-5 uppercase tracking-widest text-center">Time from selection to match</p>
+
+          <h3 className="text-xs uppercase tracking-widest text-matsu/60 mb-2">Fastest</h3>
+          <div className="border border-washi-darker/60 mb-5">
+            {fastest.map((t, i) => (
+              <div key={t.flag.id} className={`flex items-center gap-3 px-3 py-2 ${i > 0 ? 'border-t border-washi-darker/40' : ''}`}>
+                <img src={t.flag.flag_url} alt="" className="w-8 h-5 object-contain shrink-0" />
+                <div className="flex items-baseline gap-2 min-w-0 flex-1">
+                  <span className="font-kanji text-sm leading-tight">{t.flag.name_ja}</span>
+                  <span className="text-xs text-sumi-light/40 truncate">{t.flag.name_en}</span>
+                </div>
+                <span className="text-xs font-mono text-matsu shrink-0">{formatMs(t.timeMs)}</span>
+              </div>
+            ))}
+          </div>
+
+          <h3 className="text-xs uppercase tracking-widest text-ake/60 mb-2">Slowest</h3>
+          <div className="border border-washi-darker/60 mb-6">
+            {slowest.map((t, i) => (
+              <div key={t.flag.id} className={`flex items-center gap-3 px-3 py-2 ${i > 0 ? 'border-t border-washi-darker/40' : ''}`}>
+                <img src={t.flag.flag_url} alt="" className="w-8 h-5 object-contain shrink-0" />
+                <div className="flex items-baseline gap-2 min-w-0 flex-1">
+                  <span className="font-kanji text-sm leading-tight">{t.flag.name_ja}</span>
+                  <span className="text-xs text-sumi-light/40 truncate">{t.flag.name_en}</span>
+                </div>
+                <span className="text-xs font-mono text-ake shrink-0">{formatMs(t.timeMs)}</span>
+              </div>
+            ))}
+          </div>
+
+          {slowest.length >= 3 && (
+            <button
+              onClick={() => setGame(g => ({ ...g, phase: 'review' }))}
+              className="w-full bg-washi border border-washi-darker/60 py-3 text-sm font-medium text-sumi hover:bg-washi-dark/50 transition-colors"
+            >
+              Learn the unfamiliar ones?
+            </button>
+          )}
+
+          <button
+            onClick={() => setGame(g => ({ ...g, phase: 'results' }))}
+            className="w-full mt-2 py-2 text-xs text-sumi-light/40 hover:text-sumi transition-colors"
+          >
+            ← Back to results
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  // Review
+  if (game.phase === 'review') {
+    const sorted = [...game.timings].sort((a, b) => a.timeMs - b.timeMs)
+    const slowest = sorted.slice(-10).reverse()
+
+    return (
+      <div className="max-w-lg mx-auto pt-2 sm:pt-6 flex-1 min-h-0 overflow-y-auto animate-in">
+        <div className="bg-white border border-washi-darker/60 px-4 sm:px-6 py-5 sm:py-8">
+          <h2 className="text-lg font-medium mb-1 text-center">Review</h2>
+          <p className="text-xs text-sumi-light/30 mb-5 text-center">Memorize these flags and their names</p>
+
+          <div className="grid grid-cols-5 gap-2 sm:gap-3 mb-6">
+            {slowest.map(t => (
+              <div key={t.flag.id} className="text-center">
+                <div className="aspect-[4/3] bg-washi border border-washi-darker/60 flex items-center justify-center p-1 mb-1">
+                  <img src={t.flag.flag_url} alt="" className="w-full h-full object-contain" draggable={false} />
+                </div>
+                <span className="font-kanji text-xs sm:text-sm leading-tight block">{t.flag.name_ja}</span>
+                <span className="text-[8px] sm:text-[9px] text-sumi-light/40 leading-tight block">{t.flag.name_en}</span>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-xs text-sumi-light/40 text-center mb-5">
+            Ready? Start a quick quiz with only these {slowest.length} flags:
+          </p>
+
+          <div className="flex gap-3 justify-center">
+            <button
+              onClick={() => onStartPractice(slowest.map(t => t.flag), 'guess')}
+              className="bg-matsu text-white px-5 py-2.5 text-sm font-medium hover:bg-matsu-light transition-colors"
+            >
+              Guess
+            </button>
+            <button
+              onClick={() => onStartPractice(slowest.map(t => t.flag), 'flagmatch')}
+              className="bg-sumi text-washi px-5 py-2.5 text-sm font-medium hover:bg-sumi-light transition-colors"
+            >
+              Match
+            </button>
+          </div>
+
+          <button
+            onClick={() => setGame(g => ({ ...g, phase: 'stats' }))}
+            className="w-full mt-3 py-2 text-xs text-sumi-light/40 hover:text-sumi transition-colors"
+          >
+            ← Back to stats
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  // Playing
   return (
     <div className="max-w-5xl mx-auto flex-1 min-h-0 flex flex-col">
       {/* Status bar */}
@@ -315,39 +495,6 @@ export default function GuessMode({ practiceFlags, onClearPractice }: GuessProps
           })}
         </div>
       </div>
-
-      {/* Complete overlay */}
-      {game.phase === 'complete' && (
-        <div className="fixed inset-0 z-40 bg-sumi/20 flex items-center justify-center p-4" onClick={() => {}}>
-          <div className="bg-white border border-washi-darker/60 shadow-lg px-8 py-8 max-w-xs text-center animate-in" onClick={e => e.stopPropagation()}>
-            <h2 className="text-lg font-medium mb-1">All Matched!</h2>
-            <p className="text-xs text-sumi-light/30 mb-4 uppercase tracking-widest">{game.difficulty} mode</p>
-            <div className="flex justify-center gap-6 mb-5">
-              <div className="text-center">
-                <div className="text-xl font-medium text-ake">{game.mistakes}</div>
-                <div className="text-[10px] uppercase tracking-widest text-sumi-light/30 mt-0.5">Mistakes</div>
-              </div>
-              <div className="text-center">
-                <div className="text-xl font-medium">{formatTime(game.elapsedSeconds)}</div>
-                <div className="text-[10px] uppercase tracking-widest text-sumi-light/30 mt-0.5">Time</div>
-              </div>
-            </div>
-            <div className="flex gap-3 justify-center">
-              <button onClick={() => startGame('easy')} className="bg-matsu text-white px-6 py-2.5 text-sm font-medium hover:bg-matsu-light transition-colors">
-                Easy
-              </button>
-              <button onClick={() => startGame('hard')} className="bg-sumi text-washi px-6 py-2.5 text-sm font-medium hover:bg-sumi-light transition-colors">
-                Hard
-              </button>
-            </div>
-            {practiceFlags && (
-              <button onClick={onClearPractice} className="mt-3 text-xs text-sumi-light/40 hover:text-sumi transition-colors">
-                ← Back to results
-              </button>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   )
 }
@@ -357,6 +504,15 @@ function Stat({ label, value }: { label: string; value: string }) {
     <div className="flex items-baseline gap-1.5">
       <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-sumi-light/30">{label}</span>
       <span className="font-medium text-xs sm:text-sm">{value}</span>
+    </div>
+  )
+}
+
+function ResultStat({ label, value, color }: { label: string; value: string; color?: string }) {
+  return (
+    <div className="text-center">
+      <div className={`text-2xl font-medium ${color ?? 'text-sumi'}`}>{value}</div>
+      <div className="text-[10px] uppercase tracking-widest text-sumi-light/30 mt-1">{label}</div>
     </div>
   )
 }

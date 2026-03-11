@@ -28,7 +28,7 @@ function App() {
       {showSplash && <SplashScreen onDismiss={() => setShowSplash(false)} />}
       <Header mode={mode} onModeChange={(m) => { clearPractice(); setMode(m) }} settings={settings} onUpdateSettings={updateSettings} />
       <main className={`max-w-5xl mx-auto px-4 ${isFullscreen ? 'flex-1 min-h-0 flex flex-col' : 'pb-12 pt-2'}`}>
-        {mode === 'guess' && <GuessMode practiceFlags={practiceFlags} onClearPractice={clearPractice} />}
+        {mode === 'guess' && <GuessMode practiceFlags={practiceFlags} onClearPractice={clearPractice} onStartPractice={startPractice} />}
         {mode === 'flagmatch' && <FlagMatchMode settings={settings} practiceFlags={practiceFlags} onClearPractice={clearPractice} onStartPractice={startPractice} />}
         {mode === 'explore' && <ExploreMode />}
       </main>
