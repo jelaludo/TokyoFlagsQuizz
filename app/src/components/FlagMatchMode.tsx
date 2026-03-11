@@ -48,6 +48,7 @@ interface GameState {
   revealedIds: Set<string>
   guessedIds: Set<string>
   mistakes: Map<string, MistakeRecord>
+  revealedByMistakeIds: Set<string> // flags revealed because they were wrongly clicked (easy mode)
   timings: FlagTiming[]
   questionStartTime: number
   phase: GamePhase
@@ -83,6 +84,7 @@ export default function FlagMatchMode({ settings, practiceFlags, onClearPractice
     revealedIds: new Set(),
     guessedIds: new Set(),
     mistakes: new Map(),
+    revealedByMistakeIds: new Set(),
     timings: [],
     questionStartTime: 0,
     phase: 'intro',
@@ -108,6 +110,7 @@ export default function FlagMatchMode({ settings, practiceFlags, onClearPractice
       revealedIds: new Set(),
       guessedIds: new Set(),
       mistakes: new Map(),
+      revealedByMistakeIds: new Set(),
       timings: [],
       questionStartTime: now,
       phase: 'playing',
@@ -159,7 +162,9 @@ export default function FlagMatchMode({ settings, practiceFlags, onClearPractice
         } else {
           newMistakes.set(current.id, { flag: current, count: 1 })
         }
-        return { ...g, incorrect: g.incorrect + 1, mistakes: newMistakes, feedback: { id: flagId, type: 'incorrect' as const } }
+        const newRevealedByMistake = new Set(g.revealedByMistakeIds)
+        if (g.difficulty === 'easy') newRevealedByMistake.add(flagId)
+        return { ...g, incorrect: g.incorrect + 1, mistakes: newMistakes, revealedByMistakeIds: newRevealedByMistake, feedback: { id: flagId, type: 'incorrect' as const } }
       }
     })
   }, [])
@@ -314,47 +319,76 @@ export default function FlagMatchMode({ settings, practiceFlags, onClearPractice
 
   // Stats
   if (game.phase === 'stats') {
-    const sorted = [...game.timings].sort((a, b) => a.timeMs - b.timeMs)
-    const fastest = sorted.slice(0, 5)
-    const slowest = sorted.slice(-10).reverse()
+    const errorIds = new Set([
+      ...Array.from(game.mistakes.keys()),
+      ...game.revealedByMistakeIds,
+    ])
+    const toReview = game.timings
+      .filter(t => errorIds.has(t.flag.id))
+      .sort((a, b) => b.timeMs - a.timeMs)
+    const known = game.timings
+      .filter(t => !errorIds.has(t.flag.id))
+      .sort((a, b) => a.timeMs - b.timeMs)
 
     return (
       <div className="max-w-md mx-auto pt-2 sm:pt-6 flex-1 min-h-0 overflow-y-auto animate-in">
         <div className="bg-white border border-washi-darker/60 px-4 sm:px-6 py-5 sm:py-8">
-          <h2 className="text-lg font-medium mb-1 text-center">Timing Stats</h2>
-          <p className="text-xs text-sumi-light/30 mb-5 uppercase tracking-widest text-center">Response time per flag</p>
+          <h2 className="text-lg font-medium mb-1 text-center">Performance</h2>
+          <p className="text-xs text-sumi-light/30 mb-5 uppercase tracking-widest text-center">Based on errors &amp; timing</p>
 
-          {/* Fastest */}
-          <h3 className="text-xs uppercase tracking-widest text-matsu/60 mb-2">Fastest</h3>
-          <div className="border border-washi-darker/60 mb-5">
-            {fastest.map((t, i) => (
-              <div key={t.flag.id} className={`flex items-center gap-3 px-3 py-2 ${i > 0 ? 'border-t border-washi-darker/40' : ''}`}>
-                <img src={t.flag.flag_url} alt="" className="w-8 h-5 object-contain shrink-0" />
-                <div className="flex items-baseline gap-2 min-w-0 flex-1">
-                  <span className="font-kanji text-sm leading-tight">{t.flag.name_ja}</span>
-                  <span className="text-xs text-sumi-light/40 truncate">{t.flag.name_en}</span>
-                </div>
-                <span className="text-xs font-mono text-matsu shrink-0">{formatMs(t.timeMs)}</span>
+          {toReview.length > 0 && (
+            <>
+              <h3 className="text-xs uppercase tracking-widest text-ake/60 mb-2">To Review — {toReview.length} flag{toReview.length !== 1 ? 's' : ''}</h3>
+              <div className="border border-washi-darker/60 mb-5">
+                {toReview.map((t, i) => {
+                  const mistakeEntry = game.mistakes.get(t.flag.id)
+                  return (
+                    <div key={t.flag.id} className={`flex items-center gap-3 px-3 py-2 ${i > 0 ? 'border-t border-washi-darker/40' : ''}`}>
+                      <img src={t.flag.flag_url} alt="" className="w-8 h-5 object-contain shrink-0" />
+                      <div className="flex items-baseline gap-2 min-w-0 flex-1">
+                        <span className="font-kanji text-sm leading-tight">{t.flag.name_ja}</span>
+                        <span className="text-xs text-sumi-light/40 truncate">{t.flag.name_en}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        {mistakeEntry && (
+                          <span className="text-[9px] text-ake font-medium">&times;{mistakeEntry.count}</span>
+                        )}
+                        {game.revealedByMistakeIds.has(t.flag.id) && !mistakeEntry && (
+                          <span className="text-[9px] text-sumi-light/40">revealed</span>
+                        )}
+                        <span className="text-xs font-mono text-ake">{formatMs(t.timeMs)}</span>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
-            ))}
-          </div>
+            </>
+          )}
 
-          {/* Slowest */}
-          <h3 className="text-xs uppercase tracking-widest text-ake/60 mb-2">Slowest</h3>
-          <div className="border border-washi-darker/60 mb-6">
-            {slowest.map((t, i) => (
-              <div key={t.flag.id} className={`flex items-center gap-3 px-3 py-2 ${i > 0 ? 'border-t border-washi-darker/40' : ''}`}>
-                <img src={t.flag.flag_url} alt="" className="w-8 h-5 object-contain shrink-0" />
-                <div className="flex items-baseline gap-2 min-w-0 flex-1">
-                  <span className="font-kanji text-sm leading-tight">{t.flag.name_ja}</span>
-                  <span className="text-xs text-sumi-light/40 truncate">{t.flag.name_en}</span>
-                </div>
-                <span className="text-xs font-mono text-ake shrink-0">{formatMs(t.timeMs)}</span>
+          {known.length > 0 && (
+            <>
+              <h3 className="text-xs uppercase tracking-widest text-matsu/60 mb-2">Known — {known.length} flag{known.length !== 1 ? 's' : ''}</h3>
+              <div className="border border-washi-darker/60 mb-6">
+                {known.slice(0, 10).map((t, i) => (
+                  <div key={t.flag.id} className={`flex items-center gap-3 px-3 py-2 ${i > 0 ? 'border-t border-washi-darker/40' : ''}`}>
+                    <img src={t.flag.flag_url} alt="" className="w-8 h-5 object-contain shrink-0" />
+                    <div className="flex items-baseline gap-2 min-w-0 flex-1">
+                      <span className="font-kanji text-sm leading-tight">{t.flag.name_ja}</span>
+                      <span className="text-xs text-sumi-light/40 truncate">{t.flag.name_en}</span>
+                    </div>
+                    <span className="text-xs font-mono text-matsu shrink-0">{formatMs(t.timeMs)}</span>
+                  </div>
+                ))}
+                {known.length > 10 && (
+                  <div className="px-3 py-1.5 text-[10px] text-sumi-light/30 text-center border-t border-washi-darker/40">
+                    +{known.length - 10} more
+                  </div>
+                )}
               </div>
-            ))}
-          </div>
+            </>
+          )}
 
-          {slowest.length >= 3 && (
+          {toReview.length >= 3 && (
             <button
               onClick={() => setGame(g => ({ ...g, phase: 'review' }))}
               className="w-full bg-washi border border-washi-darker/60 py-3 text-sm font-medium text-sumi hover:bg-washi-dark/50 transition-colors"
@@ -376,8 +410,11 @@ export default function FlagMatchMode({ settings, practiceFlags, onClearPractice
 
   // Review
   if (game.phase === 'review') {
-    const sorted = [...game.timings].sort((a, b) => a.timeMs - b.timeMs)
-    const slowest = sorted.slice(-10).reverse()
+    const errorIds = new Set([
+      ...Array.from(game.mistakes.keys()),
+      ...game.revealedByMistakeIds,
+    ])
+    const toReview = game.timings.filter(t => errorIds.has(t.flag.id))
 
     return (
       <div className="max-w-lg mx-auto pt-2 sm:pt-6 flex-1 min-h-0 overflow-y-auto animate-in">
@@ -385,9 +422,8 @@ export default function FlagMatchMode({ settings, practiceFlags, onClearPractice
           <h2 className="text-lg font-medium mb-1 text-center">Review</h2>
           <p className="text-xs text-sumi-light/30 mb-5 text-center">Memorize these flags and their names</p>
 
-          {/* Two-row flag review grid */}
           <div className="grid grid-cols-5 gap-2 sm:gap-3 mb-6">
-            {slowest.map(t => (
+            {toReview.map(t => (
               <div key={t.flag.id} className="text-center">
                 <div className="aspect-[4/3] bg-washi border border-washi-darker/60 flex items-center justify-center p-1 mb-1">
                   <img src={t.flag.flag_url} alt="" className="w-full h-full object-contain" draggable={false} />
@@ -399,18 +435,18 @@ export default function FlagMatchMode({ settings, practiceFlags, onClearPractice
           </div>
 
           <p className="text-xs text-sumi-light/40 text-center mb-5">
-            Ready? Start a quick quiz with only these {slowest.length} flags:
+            Ready? Start a quick quiz with only these {toReview.length} flags:
           </p>
 
           <div className="flex gap-3 justify-center">
             <button
-              onClick={() => onStartPractice(slowest.map(t => t.flag), 'flagmatch')}
+              onClick={() => onStartPractice(toReview.map(t => t.flag), 'flagmatch')}
               className="bg-matsu text-white px-5 py-2.5 text-sm font-medium hover:bg-matsu-light transition-colors"
             >
               Match
             </button>
             <button
-              onClick={() => onStartPractice(slowest.map(t => t.flag), 'guess')}
+              onClick={() => onStartPractice(toReview.map(t => t.flag), 'guess')}
               className="bg-sumi text-washi px-5 py-2.5 text-sm font-medium hover:bg-sumi-light transition-colors"
             >
               Guess
