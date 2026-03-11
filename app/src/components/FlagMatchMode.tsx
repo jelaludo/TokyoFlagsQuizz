@@ -85,12 +85,13 @@ export default function FlagMatchMode({ settings, practiceFlags, onClearPractice
     mistakes: new Map(),
     timings: [],
     questionStartTime: 0,
-    phase: practiceFlags ? 'playing' : 'intro',
+    phase: 'intro',
     difficulty: 'easy',
     total,
   })
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const practiceStarted = useRef(false)
 
   const startGame = useCallback((difficulty: Difficulty) => {
     const f = practiceFlags ?? allFlags
@@ -117,10 +118,11 @@ export default function FlagMatchMode({ settings, practiceFlags, onClearPractice
 
   // Auto-start practice mode
   useEffect(() => {
-    if (practiceFlags && game.phase === 'intro') {
+    if (practiceFlags && !practiceStarted.current) {
+      practiceStarted.current = true
       startGame('easy')
     }
-  }, [practiceFlags, game.phase, startGame])
+  }, [practiceFlags, startGame])
 
   // Timer
   useEffect(() => {

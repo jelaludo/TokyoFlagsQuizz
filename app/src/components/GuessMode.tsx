@@ -60,12 +60,12 @@ export default function GuessMode({ practiceFlags, onClearPractice }: GuessProps
     startTime: 0,
     elapsedSeconds: 0,
     difficulty: 'easy',
-    phase: practiceFlags ? 'playing' : 'intro',
+    phase: 'intro',
     total,
   })
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const practiceStarted = useRef(false)
 
-  // Auto-start when entering with practice flags
   const startGame = useCallback((difficulty: Difficulty) => {
     const f = practiceFlags ?? allFlags
     setGame({
@@ -86,10 +86,11 @@ export default function GuessMode({ practiceFlags, onClearPractice }: GuessProps
 
   // Auto-start practice mode
   useEffect(() => {
-    if (practiceFlags && game.phase === 'intro') {
+    if (practiceFlags && !practiceStarted.current) {
+      practiceStarted.current = true
       startGame('easy')
     }
-  }, [practiceFlags, game.phase, startGame])
+  }, [practiceFlags, startGame])
 
   // Timer
   useEffect(() => {
