@@ -1,3 +1,12 @@
+export type AppMode = 'map' | 'flagmatch' | 'explore'
+
+export interface FlagItem {
+  id: string
+  name_en: string
+  name_ja: string
+  flag_url: string
+}
+
 export interface SymbolInfo {
   name_en: string;
   species: string;

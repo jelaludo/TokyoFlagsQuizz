@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import wardsData from '../data/wards.json'
 import type { Ward } from '../types'
 
+const logoUrl = import.meta.env.BASE_URL + 'logo.png'
+
 const wards = wardsData as Ward[]
 
 interface FloatingIcon {
@@ -100,10 +102,8 @@ export default function SplashScreen({ onDismiss }: { onDismiss: () => void }) {
 
       {/* Center title */}
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <h1 className="text-3xl font-light tracking-tight text-sumi/80">
-          Tokyo <span className="font-medium">Quizz</span>
-        </h1>
-        <p className="font-jp text-lg text-sumi/60 mt-1">
+        <img src={logoUrl} alt="区旗クイズ — Tokyo Flags Quizz" className="w-56 sm:w-64" />
+        <p className="font-jp text-lg text-sumi/60 mt-3">
           東京二十三区
         </p>
         <p className="text-[11px] text-sumi-light/30 mt-8 tracking-widest uppercase">

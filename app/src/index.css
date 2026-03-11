@@ -13,6 +13,7 @@
   --color-kuri: #8B7355;
   --font-sans: 'Space Grotesk', 'Noto Sans JP', sans-serif;
   --font-jp: 'Noto Sans JP', sans-serif;
+  --font-kanji: 'Shippori Mincho', serif;
 }
 
 body {
@@ -26,6 +27,10 @@ body {
 
 .font-jp {
   font-family: var(--font-jp);
+}
+
+.font-kanji {
+  font-family: var(--font-kanji);
 }
 
 @keyframes fadeIn {
@@ -45,6 +50,17 @@ body {
 
 .animate-shake {
   animation: shake 0.25s ease-out;
+}
+
+@keyframes pulse-correct {
+  0% { box-shadow: 0 0 0 0 rgba(107, 142, 107, 0.6); border-color: #6B8E6B; }
+  50% { box-shadow: 0 0 0 6px rgba(107, 142, 107, 0.3); border-color: #6B8E6B; }
+  100% { box-shadow: 0 0 0 10px rgba(107, 142, 107, 0); border-color: #6B8E6B; }
+}
+
+.animate-pulse-correct {
+  animation: pulse-correct 0.5s ease-out;
+  border-color: #6B8E6B;
 }
 
 /* Thin decorative line */

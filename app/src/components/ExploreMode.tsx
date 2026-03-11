@@ -1,92 +1,140 @@
 import { useState } from 'react'
 import wardsData from '../data/wards.json'
-import type { Ward } from '../types'
-import WardCard from './WardCard'
+import type { Ward, FlagItem } from '../types'
+import { tokyoMetro } from '../data/tokyo-metro'
 
 const wards = wardsData as Ward[]
+const wardsByPopulation = [...wards].sort((a, b) => b.population - a.population)
 
-type Filter = 'all' | 'has-bird' | 'cherry' | 'azalea'
-
-const filters: { key: Filter; label: string }[] = [
-  { key: 'all', label: 'All' },
-  { key: 'has-bird', label: 'Has bird' },
-  { key: 'cherry', label: 'Cherry tree' },
-  { key: 'azalea', label: 'Azalea flower' },
+const gridFlags: FlagItem[] = [
+  ...wardsByPopulation.map(w => ({
+    id: w.id,
+    name_en: w.name_en,
+    name_ja: w.name_ja,
+    flag_url: w.flag_url,
+  })),
+  tokyoMetro,
 ]
 
-export default function ExploreMode() {
-  const [filter, setFilter] = useState<Filter>('all')
-  const [search, setSearch] = useState('')
+const wardMap = new Map<string, Ward>(wards.map(w => [w.id, w]))
+const flagMap = new Map<string, FlagItem>(gridFlags.map(f => [f.id, f]))
 
-  const filtered = wards.filter(w => {
-    if (search) {
-      const q = search.toLowerCase()
-      return (
-        w.name_en.toLowerCase().includes(q) ||
-        w.name_ja.includes(q) ||
-        w.tree.name_en.toLowerCase().includes(q) ||
-        w.flower.name_en.toLowerCase().includes(q) ||
-        (w.bird?.name_en.toLowerCase().includes(q) ?? false) ||
-        w.notable_districts.some(d => d.toLowerCase().includes(q))
-      )
-    }
-    switch (filter) {
-      case 'has-bird': return w.bird !== null
-      case 'cherry': return w.tree.name_en.toLowerCase().includes('cherry')
-      case 'azalea': return w.flower.name_en.toLowerCase().includes('azalea')
-      default: return true
-    }
-  })
+export default function ExploreMode() {
+  const [selectedId, setSelectedId] = useState<string | null>(null)
+  const selectedWard = selectedId ? wardMap.get(selectedId) ?? null : null
+  const selectedFlag = selectedId ? flagMap.get(selectedId) ?? null : null
 
   return (
-    <div>
-      {/* Search */}
-      <div className="mb-6">
-        <input
-          type="text"
-          placeholder="Search wards, trees, flowers, districts..."
-          value={search}
-          onChange={e => { setSearch(e.target.value); setFilter('all') }}
-          className="w-full px-4 py-2.5 bg-white border border-washi-darker/60 text-sm placeholder:text-sumi-light/30 focus:outline-none focus:border-sumi/30 transition-colors"
-        />
-      </div>
-
-      {/* Filters */}
-      {!search && (
-        <div className="flex gap-1 mb-6">
-          {filters.map(f => (
-            <button
-              key={f.key}
-              onClick={() => setFilter(f.key)}
-              className={`px-3 py-1.5 text-xs transition-colors ${
-                filter === f.key
-                  ? 'bg-sumi text-washi'
-                  : 'text-sumi-light/50 hover:text-sumi'
-              }`}
-            >
-              {f.label}
-            </button>
-          ))}
-        </div>
-      )}
-
-      {/* Count */}
-      <p className="text-[11px] uppercase tracking-widest text-sumi-light/30 mb-5">
-        {filtered.length} ward{filtered.length !== 1 ? 's' : ''}
-      </p>
-
-      {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-washi-darker/40">
-        {filtered.map((ward, i) => (
-          <WardCard key={ward.id} ward={ward} index={i} />
+    <div className="max-w-2xl mx-auto">
+      {/* Flag grid */}
+      <div className="grid grid-cols-4 sm:grid-cols-6 gap-1.5 sm:gap-2 py-2">
+        {gridFlags.map(flag => (
+          <button
+            key={flag.id}
+            onClick={() => setSelectedId(flag.id)}
+            className="aspect-square bg-white border border-washi-darker/60 hover:border-sumi/30 flex items-center justify-center p-1.5 transition-colors cursor-pointer"
+          >
+            <img
+              src={flag.flag_url}
+              alt={flag.name_en}
+              className="w-full h-full object-contain"
+              draggable={false}
+            />
+          </button>
         ))}
       </div>
 
-      {filtered.length === 0 && (
-        <div className="text-center py-20 text-sumi-light/30">
-          <p className="text-sm">No results</p>
+      <p className="text-[10px] text-sumi-light/30 text-center mt-2">
+        Sorted by population — tap a flag to learn more
+      </p>
+
+      {/* Card modal */}
+      {selectedId && (
+        <div
+          className="fixed inset-0 z-40 bg-sumi/30 flex items-center justify-center p-4"
+          onClick={() => setSelectedId(null)}
+        >
+          <div
+            className="bg-white border border-washi-darker/60 shadow-lg max-w-sm w-full animate-in"
+            onClick={e => e.stopPropagation()}
+          >
+            {/* Flag */}
+            <div className="aspect-[3/2] bg-washi flex items-center justify-center border-b border-washi-dark/50">
+              <img
+                src={(selectedWard ?? selectedFlag)!.flag_url}
+                alt={`Flag of ${(selectedWard ?? selectedFlag)!.name_en}`}
+                className="max-w-[70%] max-h-[70%] object-contain"
+              />
+            </div>
+
+            <div className="p-5">
+              {selectedWard ? (
+                <>
+                  {/* Header with seal */}
+                  <div className="flex items-center gap-3 mb-4 pb-3 border-b border-washi-dark/50">
+                    <img
+                      src={selectedWard.seal_url}
+                      alt={`Seal of ${selectedWard.name_en}`}
+                      className="w-8 h-8 object-contain opacity-70"
+                    />
+                    <div>
+                      <h3 className="font-medium text-base leading-tight">{selectedWard.name_en}</h3>
+                      <span className="font-jp text-sm text-sumi">{selectedWard.name_ja}</span>
+                    </div>
+                  </div>
+
+                  {/* Symbols */}
+                  <div className="space-y-2.5">
+                    <SymbolRow label="Tree" value={selectedWard.tree.name_en} latin={selectedWard.tree.species} />
+                    <SymbolRow label="Flower" value={selectedWard.flower.name_en} latin={selectedWard.flower.species} />
+                    {selectedWard.bird && (
+                      <SymbolRow label="Bird" value={selectedWard.bird.name_en} latin={selectedWard.bird.species} />
+                    )}
+                  </div>
+
+                  {/* Meta */}
+                  <div className="mt-4 pt-3 border-t border-washi-dark/50">
+                    <div className="flex gap-4 text-xs text-sumi-light/40">
+                      <span>{selectedWard.population.toLocaleString()} pop.</span>
+                      <span>{selectedWard.area_km2} km²</span>
+                    </div>
+                    {selectedWard.notable_districts.length > 0 && (
+                      <p className="text-xs text-sumi-light/40 mt-1.5">
+                        {selectedWard.notable_districts.slice(0, 4).join(' · ')}
+                      </p>
+                    )}
+                  </div>
+                </>
+              ) : selectedFlag && (
+                <div className="text-center py-2">
+                  <h3 className="font-medium text-base">{selectedFlag.name_en}</h3>
+                  <span className="font-jp text-lg text-sumi">{selectedFlag.name_ja}</span>
+                </div>
+              )}
+            </div>
+
+            {/* Close */}
+            <button
+              onClick={() => setSelectedId(null)}
+              className="w-full border-t border-washi-darker/60 py-2.5 text-xs text-sumi-light/40 hover:text-sumi transition-colors"
+            >
+              Close
+            </button>
+          </div>
         </div>
       )}
+    </div>
+  )
+}
+
+function SymbolRow({ label, value, latin }: { label: string; value: string; latin: string }) {
+  return (
+    <div className="flex items-baseline gap-3">
+      <span className="text-[10px] uppercase tracking-widest text-sumi-light/30 w-12 shrink-0">{label}</span>
+      <div className="min-w-0">
+        <span className="text-sm font-medium">{value}</span>
+        <span className="text-xs text-sumi-light/30 italic ml-2">{latin}</span>
+      </div>
     </div>
   )
 }
