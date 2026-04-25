@@ -1,5 +1,5 @@
 # Tokyo Quizz — Project Plan
-
+test to redeploy
 ## Concept
 
 A playful, modern web app that teaches users about Tokyo's 23 special wards through their civic symbols: **flags, seals, official trees, flowers, and birds**. Users learn through flashcard-style browsing and test themselves with a quiz mode.
