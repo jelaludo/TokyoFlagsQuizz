@@ -16,8 +16,8 @@
       "name_en": "Swan",
       "species": "Cygnus"
     },
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Flag_of_Chiyoda%2C_Tokyo.svg/200px-Flag_of_Chiyoda%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Emblem_of_Chiyoda%2C_Tokyo.svg/120px-Emblem_of_Chiyoda%2C_Tokyo.svg.png",
+    "flag_url": "flags/chiyoda.svg",
+    "seal_url": "seals/chiyoda.svg",
     "population": 66680,
     "area_km2": 11.66,
     "notable_districts": [
@@ -42,8 +42,8 @@
       "species": "Rhododendron"
     },
     "bird": null,
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Flag_of_Chuo%2C_Tokyo.svg/200px-Flag_of_Chuo%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Emblem_of_Chuo%2C_Tokyo.svg/120px-Emblem_of_Chuo%2C_Tokyo.svg.png",
+    "flag_url": "flags/chuo.svg",
+    "seal_url": "seals/chuo.svg",
     "population": 169179,
     "area_km2": 10.21,
     "notable_districts": [
@@ -67,8 +67,8 @@
       "species": "Hydrangea macrophylla / Rosa"
     },
     "bird": null,
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_Minato%2C_Tokyo.svg/200px-Flag_of_Minato%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Emblem_of_Minato%2C_Tokyo.svg/120px-Emblem_of_Minato%2C_Tokyo.svg.png",
+    "flag_url": "flags/minato.svg",
+    "seal_url": "seals/minato.svg",
     "population": 260486,
     "area_km2": 20.37,
     "notable_districts": [
@@ -93,8 +93,8 @@
       "species": "Rhododendron"
     },
     "bird": null,
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Flag_of_Shinjuku%2C_Tokyo.svg/200px-Flag_of_Shinjuku%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Emblem_of_Shinjuku%2C_Tokyo.svg/120px-Emblem_of_Shinjuku%2C_Tokyo.svg.png",
+    "flag_url": "flags/shinjuku.svg",
+    "seal_url": "seals/shinjuku.svg",
     "population": 349385,
     "area_km2": 18.22,
     "notable_districts": [
@@ -118,8 +118,8 @@
       "species": "Rhododendron"
     },
     "bird": null,
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_Bunkyo%2C_Tokyo.svg/200px-Flag_of_Bunkyo%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Emblem_of_Bunkyo%2C_Tokyo.svg/120px-Emblem_of_Bunkyo%2C_Tokyo.svg.png",
+    "flag_url": "flags/bunkyo.svg",
+    "seal_url": "seals/bunkyo.svg",
     "population": 240069,
     "area_km2": 11.29,
     "notable_districts": [
@@ -142,8 +142,8 @@
       "species": "Ipomoea nil"
     },
     "bird": null,
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Flag_of_Taito%2C_Tokyo.svg/200px-Flag_of_Taito%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Emblem_of_Taito%2C_Tokyo.svg/120px-Emblem_of_Taito%2C_Tokyo.svg.png",
+    "flag_url": "flags/taito.svg",
+    "seal_url": "seals/taito.svg",
     "population": 211444,
     "area_km2": 10.11,
     "notable_districts": [
@@ -165,8 +165,8 @@
       "species": "Rhododendron"
     },
     "bird": null,
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Flag_of_Sumida%2C_Tokyo.svg/200px-Flag_of_Sumida%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Emblem_of_Sumida%2C_Tokyo.svg/120px-Emblem_of_Sumida%2C_Tokyo.svg.png",
+    "flag_url": "flags/sumida.svg",
+    "seal_url": "seals/sumida.svg",
     "population": 272085,
     "area_km2": 13.77,
     "notable_districts": [
@@ -189,8 +189,8 @@
       "species": "Camellia sasanqua"
     },
     "bird": null,
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Flag_of_Koto%2C_Tokyo.svg/200px-Flag_of_Koto%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Emblem_of_Koto%2C_Tokyo.svg/120px-Emblem_of_Koto%2C_Tokyo.svg.png",
+    "flag_url": "flags/koto.svg",
+    "seal_url": "seals/koto.svg",
     "population": 524310,
     "area_km2": 40.16,
     "notable_districts": [
@@ -217,8 +217,8 @@
       "name_en": "Black-headed Gull",
       "species": "Chroicocephalus ridibundus"
     },
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Flag_of_Shinagawa%2C_Tokyo.svg/200px-Flag_of_Shinagawa%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Emblem_of_Shinagawa%2C_Tokyo.svg/120px-Emblem_of_Shinagawa%2C_Tokyo.svg.png",
+    "flag_url": "flags/shinagawa.svg",
+    "seal_url": "seals/shinagawa.svg",
     "population": 422488,
     "area_km2": 22.84,
     "notable_districts": [
@@ -245,8 +245,8 @@
       "name_en": "Great Tit",
       "species": "Parus major"
     },
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Flag_of_Meguro%2C_Tokyo.svg/200px-Flag_of_Meguro%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Emblem_of_Meguro%2C_Tokyo.svg/120px-Emblem_of_Meguro%2C_Tokyo.svg.png",
+    "flag_url": "flags/meguro.svg",
+    "seal_url": "seals/meguro.svg",
     "population": 288088,
     "area_km2": 14.67,
     "notable_districts": [
@@ -273,8 +273,8 @@
       "name_en": "Japanese Bush Warbler",
       "species": "Horornis diphone"
     },
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Flag_of_Ota%2C_Tokyo.svg/200px-Flag_of_Ota%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Emblem_of_%C5%8Cta%2C_Tokyo.svg/120px-Emblem_of_%C5%8Cta%2C_Tokyo.svg.png",
+    "flag_url": "flags/ota.svg",
+    "seal_url": "seals/ota.svg",
     "population": 748081,
     "area_km2": 60.66,
     "notable_districts": [
@@ -301,8 +301,8 @@
       "name_en": "Azure-winged Magpie",
       "species": "Cyanopica cyanus"
     },
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Flag_of_Setagaya%2C_Tokyo.svg/200px-Flag_of_Setagaya%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Emblem_of_Setagaya%2C_Tokyo.svg/120px-Emblem_of_Setagaya%2C_Tokyo.svg.png",
+    "flag_url": "flags/setagaya.svg",
+    "seal_url": "seals/setagaya.svg",
     "population": 943664,
     "area_km2": 58.05,
     "notable_districts": [
@@ -325,8 +325,8 @@
       "species": "Iris ensata"
     },
     "bird": null,
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Flag_of_Shibuya%2C_Tokyo.svg/200px-Flag_of_Shibuya%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Emblem_of_Shibuya%2C_Tokyo.svg/120px-Emblem_of_Shibuya%2C_Tokyo.svg.png",
+    "flag_url": "flags/shibuya.svg",
+    "seal_url": "seals/shibuya.svg",
     "population": 243883,
     "area_km2": 15.11,
     "notable_districts": [
@@ -350,8 +350,8 @@
       "species": "Rhododendron"
     },
     "bird": null,
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Flag_of_Nakano%2C_Tokyo.svg/200px-Flag_of_Nakano%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Emblem_of_Nakano%2C_Tokyo.svg/120px-Emblem_of_Nakano%2C_Tokyo.svg.png",
+    "flag_url": "flags/nakano.svg",
+    "seal_url": "seals/nakano.svg",
     "population": 344880,
     "area_km2": 15.59,
     "notable_districts": [
@@ -372,8 +372,8 @@
       "species": "Camellia sasanqua"
     },
     "bird": null,
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Flag_of_Suginami%2C_Tokyo.svg/200px-Flag_of_Suginami%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Emblem_of_Suginami%2C_Tokyo.svg/120px-Emblem_of_Suginami%2C_Tokyo.svg.png",
+    "flag_url": "flags/suginami.svg",
+    "seal_url": "seals/suginami.svg",
     "population": 591108,
     "area_km2": 34.06,
     "notable_districts": [
@@ -396,8 +396,8 @@
       "species": "Rhododendron"
     },
     "bird": null,
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Flag_of_Toshima%2C_Tokyo.svg/200px-Flag_of_Toshima%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Emblem_of_Toshima%2C_Tokyo.svg/120px-Emblem_of_Toshima%2C_Tokyo.svg.png",
+    "flag_url": "flags/toshima.svg",
+    "seal_url": "seals/toshima.svg",
     "population": 301599,
     "area_km2": 13.01,
     "notable_districts": [
@@ -419,8 +419,8 @@
       "species": "Rhododendron"
     },
     "bird": null,
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_Kita%2C_Tokyo.svg/200px-Flag_of_Kita%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Emblem_of_Kita%2C_Tokyo.svg/120px-Emblem_of_Kita%2C_Tokyo.svg.png",
+    "flag_url": "flags/kita.svg",
+    "seal_url": "seals/kita.svg",
     "population": 355213,
     "area_km2": 20.61,
     "notable_districts": [
@@ -443,8 +443,8 @@
       "species": "Rhododendron"
     },
     "bird": null,
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Flag_of_Arakawa%2C_Tokyo.svg/200px-Flag_of_Arakawa%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Emblem_of_Arakawa%2C_Tokyo.svg/120px-Emblem_of_Arakawa%2C_Tokyo.svg.png",
+    "flag_url": "flags/arakawa.svg",
+    "seal_url": "seals/arakawa.svg",
     "population": 217475,
     "area_km2": 10.16,
     "notable_districts": [
@@ -470,8 +470,8 @@
       "name_en": "White Wagtail",
       "species": "Motacilla alba"
     },
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Flag_of_Itabashi%2C_Tokyo.svg/200px-Flag_of_Itabashi%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Emblem_of_Itabashi%2C_Tokyo.svg/120px-Emblem_of_Itabashi%2C_Tokyo.svg.png",
+    "flag_url": "flags/itabashi.svg",
+    "seal_url": "seals/itabashi.svg",
     "population": 584483,
     "area_km2": 32.22,
     "notable_districts": [
@@ -493,8 +493,8 @@
       "species": "Rhododendron"
     },
     "bird": null,
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Flag_of_Nerima%2C_Tokyo.svg/200px-Flag_of_Nerima%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Emblem_of_Nerima%2C_Tokyo.svg/120px-Emblem_of_Nerima%2C_Tokyo.svg.png",
+    "flag_url": "flags/nerima.svg",
+    "seal_url": "seals/nerima.svg",
     "population": 752608,
     "area_km2": 48.08,
     "notable_districts": [
@@ -517,8 +517,8 @@
       "species": "Tulipa"
     },
     "bird": null,
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Flag_of_Adachi%2C_Tokyo.svg/200px-Flag_of_Adachi%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Emblem_of_Adachi%2C_Tokyo.svg/120px-Emblem_of_Adachi%2C_Tokyo.svg.png",
+    "flag_url": "flags/adachi.svg",
+    "seal_url": "seals/adachi.svg",
     "population": 695043,
     "area_km2": 53.25,
     "notable_districts": [
@@ -540,8 +540,8 @@
       "species": "Iris"
     },
     "bird": null,
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Flag_of_Katsushika%2C_Tokyo.svg/200px-Flag_of_Katsushika%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Emblem_of_Katsushika%2C_Tokyo.svg/120px-Emblem_of_Katsushika%2C_Tokyo.svg.png",
+    "flag_url": "flags/katsushika.svg",
+    "seal_url": "seals/katsushika.svg",
     "population": 453093,
     "area_km2": 34.8,
     "notable_districts": [
@@ -565,8 +565,8 @@
       "species": "Rhododendron"
     },
     "bird": null,
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Flag_of_Edogawa%2C_Tokyo.svg/200px-Flag_of_Edogawa%2C_Tokyo.svg.png",
-    "seal_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Emblem_of_Edogawa%2C_Tokyo.svg/120px-Emblem_of_Edogawa%2C_Tokyo.svg.png",
+    "flag_url": "flags/edogawa.svg",
+    "seal_url": "seals/edogawa.svg",
     "population": 697932,
     "area_km2": 49.9,
     "notable_districts": [

@@ -1,10 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
-import wardsData from '../data/wards.json'
+import wards from '../data/wards'
 import type { Ward } from '../types'
 
 const logoUrl = import.meta.env.BASE_URL + 'logo.png'
-
-const wards = wardsData as Ward[]
 
 interface FloatingIcon {
   id: number

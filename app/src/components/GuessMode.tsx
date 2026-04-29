@@ -1,10 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
-import wardsData from '../data/wards.json'
-import type { Ward, FlagItem } from '../types'
+import wards from '../data/wards'
+import type { FlagItem } from '../types'
 import { shuffle } from '../utils'
 import { tokyoMetro } from '../data/tokyo-metro'
-
-const wards = wardsData as Ward[]
 
 const allFlags: FlagItem[] = [
   ...wards.map(w => ({ id: w.id, name_en: w.name_en, name_ja: w.name_ja, flag_url: w.flag_url })),

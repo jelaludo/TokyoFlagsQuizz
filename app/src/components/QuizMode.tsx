@@ -1,9 +1,7 @@
 import { useState, useCallback, useEffect } from 'react'
-import wardsData from '../data/wards.json'
+import wards from '../data/wards'
 import type { Ward, QuizCategory, QuizQuestion, QuizFilter } from '../types'
 import { shuffle, pickRandom } from '../utils'
-
-const wards = wardsData as Ward[]
 const wardsWithBirds = wards.filter(w => w.bird !== null)
 
 function generateQuestion(quizFilter: QuizFilter): QuizQuestion {

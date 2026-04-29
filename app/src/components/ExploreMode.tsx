@@ -1,9 +1,7 @@
 import { useState } from 'react'
-import wardsData from '../data/wards.json'
+import wards from '../data/wards'
 import type { Ward, FlagItem } from '../types'
 import { tokyoMetro } from '../data/tokyo-metro'
-
-const wards = wardsData as Ward[]
 const wardsByPopulation = [...wards].sort((a, b) => b.population - a.population)
 
 const gridFlags: FlagItem[] = [

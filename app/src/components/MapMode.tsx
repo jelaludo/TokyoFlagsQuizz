@@ -1,10 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
-import wardsData from '../data/wards.json'
-import type { Ward, FlagItem } from '../types'
+import wards from '../data/wards'
+import type { FlagItem } from '../types'
 import { shuffle } from '../utils'
 import { tokyoMetro } from '../data/tokyo-metro'
-
-const wards = wardsData as Ward[]
 
 const allFlags: FlagItem[] = [
   ...wards.map(w => ({ id: w.id, name_en: w.name_en, name_ja: w.name_ja, flag_url: w.flag_url })),
@@ -16,17 +14,20 @@ function buildGridFlags(): FlagItem[] {
   return shuffle([...allFlags])
 }
 
+type Difficulty = 'easy' | 'hard'
 type Phase = 'intro' | 'playing' | 'complete'
 
 interface MapState {
   gridFlags: FlagItem[]
   names: FlagItem[]
   selectedId: string | null
-  revealedIds: Set<string>
+  revealedIds: Set<string>    // correctly matched
+  flippedIds: Set<string>     // easy mode: temporarily showing name after wrong guess
   wrongId: string | null
   mistakes: number
   startTime: number
   elapsedSeconds: number
+  difficulty: Difficulty
   phase: Phase
 }
 
@@ -38,36 +39,36 @@ function formatTime(seconds: number): string {
 
 export default function MapMode() {
   const [introGrid] = useState<FlagItem[]>(() => buildGridFlags())
-  const [game, setGame] = useState<MapState>(() => ({
+  const [game, setGame] = useState<MapState>({
     gridFlags: [],
     names: [],
     selectedId: null,
     revealedIds: new Set(),
+    flippedIds: new Set(),
     wrongId: null,
     mistakes: 0,
     startTime: 0,
     elapsedSeconds: 0,
+    difficulty: 'easy',
     phase: 'intro',
-  }))
+  })
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
-  const startGame = useCallback(() => {
+  const startGame = useCallback((difficulty: Difficulty) => {
     setGame({
       gridFlags: buildGridFlags(),
       names: shuffle([...allFlags]),
       selectedId: null,
       revealedIds: new Set(),
+      flippedIds: new Set(),
       wrongId: null,
       mistakes: 0,
       startTime: Date.now(),
       elapsedSeconds: 0,
+      difficulty,
       phase: 'playing',
     })
   }, [])
-
-  const reset = useCallback(() => {
-    startGame()
-  }, [startGame])
 
   // Timer
   useEffect(() => {
@@ -108,14 +109,33 @@ export default function MapMode() {
     })
   }, [])
 
-  // Clear wrong flash
+  // Handle wrong guess: shake then flip in easy mode
   useEffect(() => {
     if (!game.wrongId) return
-    const t = setTimeout(() => {
-      setGame(g => ({ ...g, wrongId: null }))
+    const wrongId = game.wrongId
+
+    const shakeTimeout = setTimeout(() => {
+      if (game.difficulty === 'easy') {
+        // Flip to show name
+        setGame(g => {
+          const newFlipped = new Set(g.flippedIds)
+          newFlipped.add(wrongId)
+          return { ...g, wrongId: null, flippedIds: newFlipped }
+        })
+        // Flip back after 3 seconds
+        setTimeout(() => {
+          setGame(g => {
+            const newFlipped = new Set(g.flippedIds)
+            newFlipped.delete(wrongId)
+            return { ...g, flippedIds: newFlipped }
+          })
+        }, 3000)
+      } else {
+        setGame(g => ({ ...g, wrongId: null }))
+      }
     }, 400)
-    return () => clearTimeout(t)
-  }, [game.wrongId])
+    return () => clearTimeout(shakeTimeout)
+  }, [game.wrongId, game.difficulty])
 
   // Keyboard
   useEffect(() => {
@@ -130,7 +150,7 @@ export default function MapMode() {
 
   const remaining = TOTAL - game.revealedIds.size
 
-  // Intro: modal over greyed-out grid
+  // Intro
   if (game.phase === 'intro') {
     return (
       <div className="max-w-5xl mx-auto flex-1 min-h-0 flex flex-col">
@@ -148,12 +168,23 @@ export default function MapMode() {
               <p className="text-xs sm:text-sm text-sumi-light/50 mb-5 sm:mb-6 leading-relaxed">
                 How well do you know Tokyo? Start with those you know best!
               </p>
-              <button
-                onClick={startGame}
-                className="bg-matsu text-white px-8 py-2.5 text-sm font-medium hover:bg-matsu-light transition-colors"
-              >
-                Start
-              </button>
+              <div className="flex gap-3 justify-center">
+                <button
+                  onClick={() => startGame('easy')}
+                  className="bg-matsu text-white px-6 py-2.5 text-sm font-medium hover:bg-matsu-light transition-colors"
+                >
+                  Easy
+                </button>
+                <button
+                  onClick={() => startGame('hard')}
+                  className="bg-sumi text-washi px-6 py-2.5 text-sm font-medium hover:bg-sumi-light transition-colors"
+                >
+                  Hard
+                </button>
+              </div>
+              <p className="text-[10px] sm:text-[11px] text-sumi-light/30 mt-3 sm:mt-4">
+                Easy: wrong flags flip to reveal their name
+              </p>
             </div>
           </div>
         </div>
@@ -169,13 +200,9 @@ export default function MapMode() {
           <Stat label="Remaining" value={`${remaining}/${TOTAL}`} />
           <Stat label="Mistakes" value={String(game.mistakes)} />
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-sumi-light/30">{game.difficulty}</span>
           <span className="text-xs sm:text-sm font-mono text-sumi-light/50">{formatTime(game.elapsedSeconds)}</span>
-          {game.phase === 'complete' && (
-            <button onClick={reset} className="bg-matsu text-white px-3 py-1 text-xs font-medium hover:bg-matsu-light transition-colors">
-              Again
-            </button>
-          )}
         </div>
       </div>
 
@@ -219,12 +246,24 @@ export default function MapMode() {
           {game.gridFlags.map(flag => {
             const isRevealed = game.revealedIds.has(flag.id)
             const isWrong = game.wrongId === flag.id
+            const isFlipped = game.flippedIds.has(flag.id)
 
+            // Correctly matched: green frame with name
             if (isRevealed) {
               return (
                 <div key={flag.id} className="aspect-square border-2 border-matsu bg-matsu/5 flex flex-col items-center justify-center p-0.5 animate-in">
                   <img src={flag.flag_url} alt="" className="w-3/4 h-1/2 object-contain opacity-30" draggable={false} />
                   <span className="font-kanji text-[10px] sm:text-sm leading-tight text-matsu mt-0.5">{flag.name_ja}</span>
+                </div>
+              )
+            }
+
+            // Easy mode: flipped to show name temporarily
+            if (isFlipped) {
+              return (
+                <div key={flag.id} className="aspect-square bg-washi border border-washi-darker/60 flex flex-col items-center justify-center p-0.5 animate-in">
+                  <span className="font-kanji text-sm sm:text-lg leading-tight text-sumi">{flag.name_ja}</span>
+                  <span className="text-[8px] sm:text-[9px] text-sumi-light/40 leading-tight">{flag.name_en}</span>
                 </div>
               )
             }
@@ -256,9 +295,10 @@ export default function MapMode() {
 
       {/* Complete overlay */}
       {game.phase === 'complete' && (
-        <div className="fixed inset-0 z-40 bg-sumi/20 flex items-center justify-center p-4" onClick={reset}>
+        <div className="fixed inset-0 z-40 bg-sumi/20 flex items-center justify-center p-4" onClick={() => {}}>
           <div className="bg-white border border-washi-darker/60 shadow-lg px-8 py-8 max-w-xs text-center animate-in" onClick={e => e.stopPropagation()}>
-            <h2 className="text-lg font-medium mb-3">All Matched!</h2>
+            <h2 className="text-lg font-medium mb-1">All Matched!</h2>
+            <p className="text-xs text-sumi-light/30 mb-4 uppercase tracking-widest">{game.difficulty} mode</p>
             <div className="flex justify-center gap-6 mb-5">
               <div className="text-center">
                 <div className="text-xl font-medium text-ake">{game.mistakes}</div>
@@ -269,9 +309,14 @@ export default function MapMode() {
                 <div className="text-[10px] uppercase tracking-widest text-sumi-light/30 mt-0.5">Time</div>
               </div>
             </div>
-            <button onClick={reset} className="bg-matsu text-white px-6 py-2.5 text-sm font-medium hover:bg-matsu-light transition-colors">
-              Play Again
-            </button>
+            <div className="flex gap-3 justify-center">
+              <button onClick={() => startGame('easy')} className="bg-matsu text-white px-6 py-2.5 text-sm font-medium hover:bg-matsu-light transition-colors">
+                Easy
+              </button>
+              <button onClick={() => startGame('hard')} className="bg-sumi text-washi px-6 py-2.5 text-sm font-medium hover:bg-sumi-light transition-colors">
+                Hard
+              </button>
+            </div>
           </div>
         </div>
       )}
