@@ -22,6 +22,9 @@ export default function Header({ mode, onModeChange, settings, onUpdateSettings 
             <span className="font-jp text-xs sm:text-sm text-sumi hidden sm:inline">
               東京二十三区
             </span>
+            <span className="font-mono text-[9px] text-sumi-light/40 leading-none self-end pb-1" title="build SHA">
+              {__APP_SHA__}
+            </span>
           </div>
 
           <div className="flex items-center gap-0">

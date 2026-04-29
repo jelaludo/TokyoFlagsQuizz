@@ -14,6 +14,10 @@ function buildGridFlags(flags: FlagItem[]): FlagItem[] {
   return shuffle([...flags])
 }
 
+// Module-scoped: ensures the landing auto-start fires at most once per page load,
+// even if FlagMatchMode unmounts/remounts during navigation.
+let landingAutoStarted = false
+
 interface FlagMatchProps {
   settings: Settings
   practiceFlags: FlagItem[] | null
@@ -124,6 +128,15 @@ export default function FlagMatchMode({ settings, practiceFlags, onClearPractice
       startGame('easy')
     }
   }, [practiceFlags, startGame])
+
+  // Auto-start a Hard game on initial page load (once per page load only).
+  useEffect(() => {
+    if (landingAutoStarted) return
+    if (practiceFlags) return
+    if (game.phase !== 'intro') return
+    landingAutoStarted = true
+    startGame('hard')
+  }, [practiceFlags, game.phase, startGame])
 
   // Timer
   useEffect(() => {

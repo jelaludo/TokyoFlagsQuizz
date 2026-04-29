@@ -8,7 +8,7 @@ import GuessMode from './components/GuessMode'
 import SplashScreen from './components/SplashScreen'
 
 function App() {
-  const [mode, setMode] = useState<AppMode>('guess')
+  const [mode, setMode] = useState<AppMode>('flagmatch')
   const [showSplash, setShowSplash] = useState(true)
   const [settings, updateSettings] = useSettings()
   const [practiceFlags, setPracticeFlags] = useState<null | import('./types').FlagItem[]>(null)
