@@ -16,8 +16,8 @@
       "name_en": "Swan",
       "species": "Cygnus"
     },
-    "flag_url": "flags/chiyoda.svg",
-    "seal_url": "seals/chiyoda.svg",
+    "flag_url": "flags/chiyoda.png",
+    "seal_url": "seals/chiyoda.png",
     "population": 66680,
     "area_km2": 11.66,
     "notable_districts": [
@@ -42,8 +42,8 @@
       "species": "Rhododendron"
     },
     "bird": null,
-    "flag_url": "flags/chuo.svg",
-    "seal_url": "seals/chuo.svg",
+    "flag_url": "flags/chuo.png",
+    "seal_url": "seals/chuo.png",
     "population": 169179,
     "area_km2": 10.21,
     "notable_districts": [
@@ -67,8 +67,8 @@
       "species": "Hydrangea macrophylla / Rosa"
     },
     "bird": null,
-    "flag_url": "flags/minato.svg",
-    "seal_url": "seals/minato.svg",
+    "flag_url": "flags/minato.png",
+    "seal_url": "seals/minato.png",
     "population": 260486,
     "area_km2": 20.37,
     "notable_districts": [
@@ -93,8 +93,8 @@
       "species": "Rhododendron"
     },
     "bird": null,
-    "flag_url": "flags/shinjuku.svg",
-    "seal_url": "seals/shinjuku.svg",
+    "flag_url": "flags/shinjuku.png",
+    "seal_url": "seals/shinjuku.png",
     "population": 349385,
     "area_km2": 18.22,
     "notable_districts": [
@@ -118,8 +118,8 @@
       "species": "Rhododendron"
     },
     "bird": null,
-    "flag_url": "flags/bunkyo.svg",
-    "seal_url": "seals/bunkyo.svg",
+    "flag_url": "flags/bunkyo.png",
+    "seal_url": "seals/bunkyo.png",
     "population": 240069,
     "area_km2": 11.29,
     "notable_districts": [
@@ -142,8 +142,8 @@
       "species": "Ipomoea nil"
     },
     "bird": null,
-    "flag_url": "flags/taito.svg",
-    "seal_url": "seals/taito.svg",
+    "flag_url": "flags/taito.png",
+    "seal_url": "seals/taito.png",
     "population": 211444,
     "area_km2": 10.11,
     "notable_districts": [
@@ -165,8 +165,8 @@
       "species": "Rhododendron"
     },
     "bird": null,
-    "flag_url": "flags/sumida.svg",
-    "seal_url": "seals/sumida.svg",
+    "flag_url": "flags/sumida.png",
+    "seal_url": "seals/sumida.png",
     "population": 272085,
     "area_km2": 13.77,
     "notable_districts": [
@@ -189,8 +189,8 @@
       "species": "Camellia sasanqua"
     },
     "bird": null,
-    "flag_url": "flags/koto.svg",
-    "seal_url": "seals/koto.svg",
+    "flag_url": "flags/koto.png",
+    "seal_url": "seals/koto.png",
     "population": 524310,
     "area_km2": 40.16,
     "notable_districts": [
@@ -217,8 +217,8 @@
       "name_en": "Black-headed Gull",
       "species": "Chroicocephalus ridibundus"
     },
-    "flag_url": "flags/shinagawa.svg",
-    "seal_url": "seals/shinagawa.svg",
+    "flag_url": "flags/shinagawa.png",
+    "seal_url": "seals/shinagawa.png",
     "population": 422488,
     "area_km2": 22.84,
     "notable_districts": [
@@ -245,8 +245,8 @@
       "name_en": "Great Tit",
       "species": "Parus major"
     },
-    "flag_url": "flags/meguro.svg",
-    "seal_url": "seals/meguro.svg",
+    "flag_url": "flags/meguro.png",
+    "seal_url": "seals/meguro.png",
     "population": 288088,
     "area_km2": 14.67,
     "notable_districts": [
@@ -273,8 +273,8 @@
       "name_en": "Japanese Bush Warbler",
       "species": "Horornis diphone"
     },
-    "flag_url": "flags/ota.svg",
-    "seal_url": "seals/ota.svg",
+    "flag_url": "flags/ota.png",
+    "seal_url": "seals/ota.png",
     "population": 748081,
     "area_km2": 60.66,
     "notable_districts": [
@@ -301,8 +301,8 @@
       "name_en": "Azure-winged Magpie",
       "species": "Cyanopica cyanus"
     },
-    "flag_url": "flags/setagaya.svg",
-    "seal_url": "seals/setagaya.svg",
+    "flag_url": "flags/setagaya.png",
+    "seal_url": "seals/setagaya.png",
     "population": 943664,
     "area_km2": 58.05,
     "notable_districts": [
@@ -325,8 +325,8 @@
       "species": "Iris ensata"
     },
     "bird": null,
-    "flag_url": "flags/shibuya.svg",
-    "seal_url": "seals/shibuya.svg",
+    "flag_url": "flags/shibuya.png",
+    "seal_url": "seals/shibuya.png",
     "population": 243883,
     "area_km2": 15.11,
     "notable_districts": [
@@ -350,8 +350,8 @@
       "species": "Rhododendron"
     },
     "bird": null,
-    "flag_url": "flags/nakano.svg",
-    "seal_url": "seals/nakano.svg",
+    "flag_url": "flags/nakano.png",
+    "seal_url": "seals/nakano.png",
     "population": 344880,
     "area_km2": 15.59,
     "notable_districts": [
@@ -372,8 +372,8 @@
       "species": "Camellia sasanqua"
     },
     "bird": null,
-    "flag_url": "flags/suginami.svg",
-    "seal_url": "seals/suginami.svg",
+    "flag_url": "flags/suginami.png",
+    "seal_url": "seals/suginami.png",
     "population": 591108,
     "area_km2": 34.06,
     "notable_districts": [
@@ -396,8 +396,8 @@
       "species": "Rhododendron"
     },
     "bird": null,
-    "flag_url": "flags/toshima.svg",
-    "seal_url": "seals/toshima.svg",
+    "flag_url": "flags/toshima.png",
+    "seal_url": "seals/toshima.png",
     "population": 301599,
     "area_km2": 13.01,
     "notable_districts": [
@@ -419,8 +419,8 @@
       "species": "Rhododendron"
     },
     "bird": null,
-    "flag_url": "flags/kita.svg",
-    "seal_url": "seals/kita.svg",
+    "flag_url": "flags/kita.png",
+    "seal_url": "seals/kita.png",
     "population": 355213,
     "area_km2": 20.61,
     "notable_districts": [
@@ -443,8 +443,8 @@
       "species": "Rhododendron"
     },
     "bird": null,
-    "flag_url": "flags/arakawa.svg",
-    "seal_url": "seals/arakawa.svg",
+    "flag_url": "flags/arakawa.png",
+    "seal_url": "seals/arakawa.png",
     "population": 217475,
     "area_km2": 10.16,
     "notable_districts": [
@@ -470,8 +470,8 @@
       "name_en": "White Wagtail",
       "species": "Motacilla alba"
     },
-    "flag_url": "flags/itabashi.svg",
-    "seal_url": "seals/itabashi.svg",
+    "flag_url": "flags/itabashi.png",
+    "seal_url": "seals/itabashi.png",
     "population": 584483,
     "area_km2": 32.22,
     "notable_districts": [
@@ -493,8 +493,8 @@
       "species": "Rhododendron"
     },
     "bird": null,
-    "flag_url": "flags/nerima.svg",
-    "seal_url": "seals/nerima.svg",
+    "flag_url": "flags/nerima.png",
+    "seal_url": "seals/nerima.png",
     "population": 752608,
     "area_km2": 48.08,
     "notable_districts": [
@@ -517,8 +517,8 @@
       "species": "Tulipa"
     },
     "bird": null,
-    "flag_url": "flags/adachi.svg",
-    "seal_url": "seals/adachi.svg",
+    "flag_url": "flags/adachi.png",
+    "seal_url": "seals/adachi.png",
     "population": 695043,
     "area_km2": 53.25,
     "notable_districts": [
@@ -540,8 +540,8 @@
       "species": "Iris"
     },
     "bird": null,
-    "flag_url": "flags/katsushika.svg",
-    "seal_url": "seals/katsushika.svg",
+    "flag_url": "flags/katsushika.png",
+    "seal_url": "seals/katsushika.png",
     "population": 453093,
     "area_km2": 34.8,
     "notable_districts": [
@@ -565,8 +565,8 @@
       "species": "Rhododendron"
     },
     "bird": null,
-    "flag_url": "flags/edogawa.svg",
-    "seal_url": "seals/edogawa.svg",
+    "flag_url": "flags/edogawa.png",
+    "seal_url": "seals/edogawa.png",
     "population": 697932,
     "area_km2": 49.9,
     "notable_districts": [
